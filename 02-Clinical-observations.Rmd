@@ -73,8 +73,14 @@ Many reports in the media about things that are good or bad for you are based on
 1. Find a newspaper report of a factor that is reported to be a risk or benefit to health. Is it based on an experimental or observational study? Can you identify potential sources of bias?  
 
 2. 
-![Figure ] (rothwellfig2005.jpg)
-The figure above <!---can we automatically number/cross ref this?-->  is a medical example taken from @rothwell2005, and shows the rate of stroke or death at 5 year follow-up in at-risk patients who either did or did not undergo a surgical procedure known as endarterectomy. The two bars on the left show results obtained in an experimental study where assignment to surgery was done at random, whereas the bars on the right show results for patients who were not included in a trial. What do these plots show, and how might it be explained?
+
+![](rothwellfig2005.jpg)  
+
+The figure above <!---can we automatically number/cross ref this? It might actually be easier just to redraw it as the current shape is not ideal-->  is a medical example taken from @rothwell2005, and shows the rate of stroke or death at 5 year follow-up in at-risk patients who either did or did not undergo a surgical procedure known as endarterectomy. The two bars on the left show results obtained in an experimental study where assignment to surgery was done at random, whereas the bars on the right show results for patients who were not included in a trial. What do these plots show, and how might it be explained?
+
+
+
+
 
 
 
