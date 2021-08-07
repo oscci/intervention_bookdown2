@@ -1,0 +1,5 @@
+book_filename: "Intervention_bookdown2"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Chapter "
