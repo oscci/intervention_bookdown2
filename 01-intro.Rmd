@@ -127,4 +127,3 @@ In the following examples, is there random error, systematic bias, or both?
  4. In an intervention study with aphasic patients, prior to treatment, vocabulary is measured on a naming test in the clinic, and at follow-up it is measured at home. **(systematic | random)**  
  
  
-
