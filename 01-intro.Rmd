@@ -2,6 +2,23 @@
 ```{r initialisefigs,echo=FALSE,message=FALSE,warnings=FALSE}
 require(ggplot2)
 require(tidyverse)
+## these settings taken from Modern Dive
+
+# Set R code chunk defaults:
+opts_chunk$set(
+  echo = TRUE,
+  eval = TRUE,
+  warning = FALSE,
+  message = TRUE,
+  tidy = FALSE,
+  purl = TRUE,
+  out.width = "\\textwidth",
+  fig.height = 4,
+  fig.align = "center"
+)
+options(scipen = 99, digits = 3)
+#nb to preview this chapter, preview_chapter("01-intro.Rmd")
+
 ```
 ## How can we know if we've made a difference?
 
