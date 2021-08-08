@@ -1,21 +1,10 @@
 # Introduction {#intro}
-```{r initialisefigs,echo=FALSE,message=FALSE,warnings=FALSE}
+```{r initialisefigs1,echo=FALSE,message=FALSE,warnings=FALSE}
 require(ggplot2)
 require(tidyverse)
 ## these settings taken from Modern Dive
 
-# Set R code chunk defaults:
-opts_chunk$set(
-  echo = TRUE,
-  eval = TRUE,
-  warning = FALSE,
-  message = TRUE,
-  tidy = FALSE,
-  purl = TRUE,
-  out.width = "\\textwidth",
-  fig.height = 4,
-  fig.align = "center"
-)
+
 options(scipen = 99, digits = 3)
 #nb to preview this chapter, preview_chapter("01-intro.Rmd")
 
@@ -69,7 +58,7 @@ In effect, when we assess an intervention we aim to sift out any systematic effe
 
 
 ```{r, fig.align="center", echo=FALSE}
-include_graphics("images/paleblueline.png")
+knitr::include_graphics("images/paleblueline.png")
 ``` 
 
 #### More on random error{-}
@@ -78,7 +67,7 @@ include_graphics("images/paleblueline.png")
 <p style="font-family: Times;font-size: 14px"><code>Note that for the purposes of an intervention study, we treat as "noise" or "random error" anything that creates variability in our measurements that is not part of the treatment effect. Strictly speaking, we can distinguish "measurement error", which relates to noise in the measurement system we are using (e.g. the scales) and other sources of noise, such as genuine fluctuations in weight from day to day that do not trend up or down over time. If Bridget hopped off and on the scales repeatedly in a 5 minute interval, there would be some fluctuations in her weight due to the scales (measurement error), especially if very precise measurement was used. But we could be confident her weight had not genuinely altered within that time period. Such variation is likely to be smaller than the variation observed day by day, which includes genuine variation around Bridget's average weight, reflecting physiological factors and gut contents. It is usually hard to isolate the causes of noisy measures: for our purposes, when we refer to noisy measures, the focus is just on how much a score varies in a random way - i.e. not consistently up or down. 
 </code></p>  
 ```{r, fig.align="center", echo=FALSE}
-include_graphics("images/paleblueline.png")
+knitr::include_graphics("images/paleblueline.png")
 ``` 
   
 One consequence of noisy measures is that they can show big changes from one occasion to another which, in individuals, might give a misleading impression of genuine treatment effects.  
