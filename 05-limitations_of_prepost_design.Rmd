@@ -1,5 +1,5 @@
 
-# Limitations of the pre-post design: biases related to systematic change {#pretest}
+# Limitations of the pre-post design: biases related to systematic change {#prepost}
 
 ```{r packages, echo=FALSE,message=FALSE,warning=FALSE}
 list_of_packages<-c("tidyverse","kableExtra","knitr")

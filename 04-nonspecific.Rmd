@@ -1,6 +1,6 @@
 # Improvement due to nonspecific effects of intervention {#nonspecific}
 
-## Placebo effects and experimenter effects
+## Placebo effects 
 
 Most of us are familiar with the placebo effect in medicine: the finding that patients can show improvement in their condition even if given an inert sugar pill. There is much debate about the nature of placebo effects – whether they are mostly due to the systematic changes discussed in  Chapter \@ref(observations), or something else. They are thought to operate in cognitive and behavioural interventions as well: communication may improve in a person with aphasia because they have the attention of a sympathetic professional, rather than because of anything that professional does. And children may grow in confidence because they are made to feel valued and special by the therapist. 
 
