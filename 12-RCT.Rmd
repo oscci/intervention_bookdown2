@@ -6,8 +6,8 @@ A RCT is effective simply because it is designed to reduce all of the systematic
 
 ```{r rctchart, echo=F, include=T,tab.cap="How the RCT design deals with threats to study validity"}
 require(flextable)
-Biases <- c('Spontaneous improvement','Practice effects','Regression to the mean','Noisy data (1)','Noisy data (2)','Selection bias', 'Placebo effects', 'Experimenter bias (1)','Experimenter bias (2)','Biased drop-outs','False positives due to p-hacking')
-Remedies <- c('Control group','Control group','Control group','Strict selection criteria for participants','Outcome measures with low measurement error','Random assignment to intervention','Participant unaware of assignment','Experimenter unaware of assignment','Strictly specified protocol','Intention-to-treat analysis','Trial registration')
+Biases <- c('Spontaneous improvement','Practice effects','Regression to the mean','Noisy data (1)','Noisy data (2)','Selection bias', 'Placebo effects', 'Experimenter bias (1)','Experimenter bias (2)','Biased drop-outs','Low power','False positives due to p-hacking')
+Remedies <- c('Control group','Control group','Control group','Strict selection criteria for participants','Outcome measures with low measurement error','Random assignment to intervention','Participant unaware of assignment','Experimenter unaware of assignment','Strictly specified protocol','Intention-to-treat analysis','A priori power analysis','Registration of trial protocol')
 mydf<-data.frame(cbind(Biases,Remedies))
 ftable<-flextable(mydf)
 ftable <- set_caption(ftable, "How the RCT design deals with threats to study validity")
@@ -163,9 +163,11 @@ ftable
 
 
 ## Class exercise  
-Find an intervention study of interest and check whether the protocol was deposited in a repository before the study began. If so, check the analysis against the preregistration, cf. @goldacre2019. 
+1. Find an intervention study of interest and check whether the protocol was deposited in a repository before the study began. If so, check the analysis against the preregistration, cf. @goldacre2019. 
 Note which analysis method was used to estimate the intervention effect.  
-Did the researchers provide enough information to give an idea of the effect size, or merely report p-values? Did the analysis method take into account baseline scores in an appropriate way? 
+Did the researchers provide enough information to give an idea of the effect size, or merely report p-values? Did the analysis method take into account baseline scores in an appropriate way?  
+
+2. In Chapter \@ref(drawbacks) we consider drawbacks of the RCT design. Before you read this chapter, see if you can anticipate the issues that we consider in our evaluation. 
 
 
 
