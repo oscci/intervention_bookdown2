@@ -1,5 +1,5 @@
 # How to select an outcome measure {#reliability}
-```{r packages3, echo=F, message=F, warning=F, fig.width=8,fig.height=4}
+```{r, echo=F, message=F, warning=F, fig.width=8,fig.height=4}
 
 library(tidyverse)
 library(ggpubr)
