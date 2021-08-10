@@ -191,7 +191,9 @@ In this example, for each of these 19 new ways of forming groups, we would calcu
 
 
 ```{r permutationstest,echo=F,message=F,warning=F,fig.width=5,fig.cap="Permutation distributions for individual tests"}
-
+#This is slow to run and so output is saved to file; only need to run this if need to recreate figure.
+makepermdemo <- 0 #set to 1 to recreate fig
+if(makepermdemo ==1){
 set.seed(123)
 
 #generate some t-test data on 10 variables
@@ -239,6 +241,10 @@ q$Variable <- 1:4
 ggplot(data=q,aes(median,Variable)) + geom_errorbarh(aes(xmin=low, xmax=up),size=1,alpha=0.25) +
 scale_x_log10() + ylab("Variable") + xlab("p-value") + scale_y_continuous(breaks=NULL)+
 geom_point(data=myp, aes(y=x,x=pvalue), size=4,shape=4)+theme_bw()
+}
+if (makepermdemo==0){
+  knitr::include_graphics("images/permtestdemo.jpg")
+}
 
 ```
 

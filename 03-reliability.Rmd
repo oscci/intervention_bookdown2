@@ -26,8 +26,9 @@ The key questions to ask are:
 
 
 ## Reliability
-```{r darts, echo=F, fig.cap='Reliability and validity illustrated as darts hitting a target'}
+```{r darts, echo=F, fig.cap='Reliability and validity illustrated as a sharpshooter hitting a target'}
 knitr::include_graphics('images/targets.jpg')
+#Not actually a dartboard.....
 ```
 
 

@@ -1,6 +1,6 @@
 
 
-# How big a sample do I need? Statistical power, sampling and type II errors{#power}
+# How big a sample do I need? Statistical power, sampling and type II errors {#power}
 ```{r, echo=F,warning=F,message=F}
 list_of_packages<-c("tidyverse","kableExtra","knitr","MASS")
 new.packages <- list_of_packages[!(list_of_packages %in% installed.packages()[,"Package"])]

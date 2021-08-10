@@ -1,5 +1,8 @@
 # The randomised controlled trial as a method for controlling biases{#RCT}
 
+```{r,echo=F}
+require(psych) #for describeBy
+```
 The randomised controlled trial (RCT) is regarded by many as the gold standard method for evaluating interventions. In the next chapter we will discuss some of the limitations of this approach that can make it less than ideal for evaluating certain kinds of non-medical interventions. But in this Chapter we'll look at the ingredients of a RCT that make it such a well-regarded method, and introduce the basic methods that can be used to analyse the results.
 
 A RCT is effective simply because it is designed to reduce all of the systematic biases that were covered in previous Chapters.
@@ -87,7 +90,7 @@ A related step is to check whether the distribution of the data meets the assump
 
 
 #for the table we just want means and SDs for middle group
-mytab <- describeBy(mydf$Y, group=mydf$Group,mat=TRUE,digits=3)
+mytab <- psych::describeBy(mydf$Y, group=mydf$Group,mat=TRUE,digits=3)
 mytab <- mytab[,c(2,4:6)]
 colnames(mytab)<-c('Group','N','Mean','SD')
 mytab[1:2,1]<-c("Control","Intervention")
