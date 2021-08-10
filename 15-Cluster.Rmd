@@ -85,7 +85,7 @@ It may not be obvious why clustering should require this different approach, and
 
 Statisticians have developed sophisticated methods of analysis for dealing with the dependency among individuals within the same cluster [@campbell2014]. It is worth taking advice from a statistician if you are contemplating doing such a trial. 
 
-
+??EXERCISE FOR THIS CHAPTER
 
 
 

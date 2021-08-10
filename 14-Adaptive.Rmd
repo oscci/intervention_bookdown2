@@ -59,7 +59,7 @@ tes1 %>%export_svg %>% charToRaw %>% rsvg_png("images/flow_16_1.png")
 knitr::include_graphics("images/flow_16_1.png")
 ``` 
 
-The adaptive design, as the name suggests, allows for modifications to certain aspects of the design as the trial progresses [see Figure \@ref(fig:adaptiveflow), taken from @pallman_2018]. Interim analyses are used to assess whether modifications are required. These pre-planned assessments can be used to make several pre-specified changes, if required. Figure 13.2 [from @Thorlund_2018] shows some of the commonly used adaptive trial designs, others include: changing the amount or frequency of intervention received, and stopping intervention early if not effective or adverse effects observed.
+The adaptive design, as the name suggests, allows for modifications to certain aspects of the design as the trial progresses (see Figure \@ref(fig:adaptiveflow), taken from @pallman_2018). Interim analyses are used to assess whether modifications are required. These pre-planned assessments can be used to make several pre-specified changes, if required. Figure 13.2 [from @Thorlund_2018] shows some of the commonly used adaptive trial designs, others include: changing the amount or frequency of intervention received, and stopping intervention early if not effective or adverse effects observed.
 
 
 
@@ -77,4 +77,7 @@ knitr::include_graphics("images/adaptive_designs.gif")
 
 ### Sequential, Multiple Assignment, Randomized Trial (SMART)
 
+DB - I think we can either just have a custom block listing these, explaining in one sentence what they are good for, and adding links to places where they are explained, or omit - but I don't know about them so if they could be useful for SLTs we could expan
 -->
+
+??EXERCISE FOR THIS CHAPTER
