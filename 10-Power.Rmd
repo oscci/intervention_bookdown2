@@ -1,5 +1,3 @@
-
-
 # How big a sample do I need? Statistical power, sampling and type II errors {#power}
 ```{r, echo=F,warning=F,message=F}
 list_of_packages<-c("tidyverse","kableExtra","knitr","MASS")
@@ -140,7 +138,7 @@ for (samplesize in 1:6){
 
 ```
 
-```{r varES, echo=F, fig.cap="Simulated mean scores from samples of varying size, drawn from populations with either a null effect (pink) or a true effect size, Cohen's _d_, of `r ES` (blue). Power (discussed below) is the probability of obtaining p < .05 on a one-tailed t-test comparing group means for each sample size."}
+```{r varES, echo=F, fig.cap="Simulated mean scores from samples of varying size, drawn from populations with either a null effect (pink) or a true effect size, Cohen's _d_, of .3 (blue). Power (discussed below) is the probability of obtaining p < .05 on a one-tailed t-test comparing group means for each sample size."}
 knitr::include_graphics('images/bees_ES0.3_Nall.jpg')
 ```
 
@@ -180,7 +178,7 @@ knitr::include_graphics("images/paleblueline.png")
 In practice, p-values are typically used to divide results into "statistically significant" or "non-significant", depending on whether the p-value is low enough to reject the null hypothesis. We do not defend this practice, which can lead to an all-consuming focus on whether p-values are above or below a cutoff, rather than considering effect sizes and strength of evidence. However, it is important to appreciate how the cutoff approach leads to experimental results falling into 4 possible categories, as shown in Table \@ref(table:confusionMat). 
 
   
-```{r confusionMat, echo=FALSE, message=FALSE, warnings=FALSE,results='asis',fig.cap=' Possible outcomes of a hypothesis test'}
+```{r confusionMat, echo=FALSE, message=FALSE, warnings=FALSE,results='asis',tab.caption=' Possible outcomes of a hypothesis test'}
 options(kableExtra.html.bsTable = T)
 mymat<-matrix(NA,nrow=2,ncol=3)
 
@@ -213,7 +211,7 @@ The researcher is confused as she knows there is research evidence to indicate t
 
 ## Statistical power
 
-Statistical power is the probability that a study will show a significant difference on a statistical test when there is a true effect.  If we take $\beta$ as the proportion of nonsignificant results that are false negatives, then power is 1-$\beta$, expressed either as a proportion or a percentage. So if I say my study has 50% power, that means that, based on my expectation of the effect size, if I were to run the study 10 times, on 5 occasions I would fail to obtain a significant difference, **even if there was a true effect in the population**.  Power depends on:
+Statistical power is the probability that a study will show a significant difference on a statistical test when there is a true effect.  If we take $\beta$ as the proportion of nonsignificant results that are false negatives, then power is 1-$\beta$, expressed either as a proportion or a percentage. So if I say my study has 40% power, that means that, based on my expectation of the effect size, if I were to run the study 10 times, on 4 occasions I would fail to obtain a significant difference, **even if there was a true effect in the population**.  Power depends on:
 
 - Sample size
 - Criterion for statistical significance, also known as the Type 1 error rate ($\alpha$)
@@ -262,7 +260,7 @@ ggarrange(p1, p2, ncol = 1, nrow = 2)
 
 
 ```
-The lower figure shows the distribution for children who had the reading intervention. The intervention had a large effect (Cohen's _d_ of one), and so the whole distribution is shifted over to the right. We're going to use a one-sided z-test, because we know that the child's score will either come from the null distribution, or from one with a higher mean. We decide to use the conventional level of $\alpha$ of .05. The vertical dotted line is therefore placed at a point where 5% of the upper distribution (the red area) is to the right of the line, and 95% (the white area) to the left. This point can be worked out from knowledge of the normal distribution and corresponds to a score on the x-axis of 1.65. Our rule is that if the child's score is greater than 1.65, we reject the null hypothesis. If it is less than 1.65, we can't reject the null hypothesis. This does not mean that the child definitely came from the non-intervention group - just that the evidence is not sufficient to rule that out. Regardless of the effect size, if  $\alpha$ level is set to .05, we wrongly reject the null hypothesis on only 1 in 20 experiments. 
+The lower figure shows the distribution for children who had the reading intervention. The intervention had a large effect (Cohen's _d_ of one), and so the whole distribution is shifted over to the right. We're going to use a one-sided z-test, because we know that the child's score will either come from the null distribution, or from one with a higher mean. We decide to use the conventional level of $\alpha$ of .05. The vertical dotted line is therefore placed at a point where 5% of the upper distribution (the red area) is to the right of the line, and 95% (the white area) to the left. This point can be worked out from knowledge of the normal distribution and corresponds to a score on the x-axis of 1.65. Our rule is that if the child's score is greater than 1.65, we reject the null hypothesis. If it is less than 1.65, we can't reject the null hypothesis. This does not mean that the child definitely came from the non-intervention group - just that the evidence is not sufficient to rule that out. Regardless of the effect size or the sample size, if  $\alpha$ level is set to .05, we wrongly reject the null hypothesis on only 1 in 20 experiments. 
 
 But now look down to the lower distribution. False negatives are represented by the blue area to the left of the dotted line: cases where we fail to reject the null hypothesis, but the score really came from the group with intervention. The power of the study corresponds to the yellow region, where we have a score greater than 1.65 and the data really come from the intervention condition. But notice that power is extremely low: the blue area is much bigger than the yellow area. We are much more likely to wrongly retain the null hypothesis than to correctly reject it - even though we have a pretty large effect size.  Note that while the false positive rate is kept constant by selection of $\alpha$ of .05, the false negative result is not. 
 
@@ -326,14 +324,14 @@ knitr::include_graphics("images/paleblueline.png")
 
 #### Standard error of the mean {-}
 
-<p style="font-family: Times;font-size: 14px"><code>It can be challenging to get an intuitive understanding of power, because the computations needed to calculate it are not straightforward. A key statistic is the standard error of the mean, also known as the SEM, usually shortened to standard error (SE). This can be thought of as an index of the variability of an estimate of the mean from a sample. If you imagine taking numerous samples from a population, and estimating the mean from each one, you will end up with a distribution of means, similar to those shown in Figure [fig above with pink and blue beeswarms]. As shown in that figure, these estimates of the mean are much more variable for small than for large samples.  The SE is the standard deviation of the estimates of the mean, and it is crucially dependent on the sample size. 
+<p style="font-family: Times;font-size: 14px"><code>It can be challenging to get an intuitive understanding of power, because the computations needed to calculate it are not straightforward. A key statistic is the standard error of the mean, also known as the SEM, usually shortened to standard error (SE). This can be thought of as an index of the variability of an estimate of the mean from a sample. If you imagine taking numerous samples from a population, and estimating the mean from each one, you will end up with a distribution of means, similar to those shown in Figure \@ref(fig:varES). As shown in that Figure, these estimates of the mean are much more variable for small than for large samples.  The SE is the standard deviation of the estimates of the mean, and it is crucially dependent on the sample size. 
 This follows form the formula for the SE, which is computed as the SD divided by the square root of N. 
 
 The test statistic, _z_ in this instance, which is used to derive a p-value, uses the SE as a denominator, and so will also be influenced by sample size. The _z_ score is defined as:  
   
 z = (M - $\mu$)/SE  
 
-The bigger the N, the smaller the SE, and the more precise the measurement, and the higher the power of the statistical test. Note that the value entered into these equations is the _square root_ of N. It follows that improvement in precision from adding extra participants to a study is greatest at small sample sizes: as shown in the figure below, the SE is approximately halved in increasing the sample size from 10 to 40, whereas changes are much smaller in going from 110 to 140 participants. </code></p>  
+The bigger the N, the smaller the SE, the more precise the measurement, and the higher the power of the statistical test. Note that the value entered into these equations is the _square root_ of N. It follows that improvement in precision from adding extra participants to a study is greatest at small sample sizes: as shown in the figure below, the SE is approximately halved in increasing the sample size from 10 to 40, whereas changes are much smaller in going from 110 to 140 participants. </code></p>  
 
 ```{r demoSE, echo=F, include=T} 
 myseq <- seq(10,200,10)
