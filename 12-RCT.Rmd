@@ -1,11 +1,11 @@
-# The randomised controlled trial as a method for controlling biases{#RCT}
+# The randomised controlled trial as a method for controlling biases {#RCT}
 
-```{r,echo=F}
+```{r,echo=F,warning=F,message=F}
 require(psych) #for describeBy
 ```
 The randomised controlled trial (RCT) is regarded by many as the gold standard method for evaluating interventions. In the next chapter we will discuss some of the limitations of this approach that can make it less than ideal for evaluating certain kinds of non-medical interventions. But in this Chapter we'll look at the ingredients of a RCT that make it such a well-regarded method, and introduce the basic methods that can be used to analyse the results.
 
-A RCT is effective simply because it is designed to reduce all of the systematic biases that were covered in previous Chapters.
+A RCT is effective simply because it is designed to counteract all of the systematic biases that were covered in previous Chapters.
 
 ```{r rctchart, echo=F, include=T,tab.cap="How the RCT design deals with threats to study validity"}
 require(flextable)
@@ -20,7 +20,7 @@ ftable
 
 The inclusion of a control group ensures that we can distinguish genuine differences in outcome caused by the intervention from other reasons for change over time (Chapter \@ref(nonspecific)). Randomisation of participants to intervention and control groups avoids bias caused either by participants' self-selection of intervention group, or experimenters' determining who gets what treatment.  In addition, as noted in Chapter \@ref(nonspecific) and Chapter \@ref(experimenter), where feasible, both participants and experimenters may be kept unaware of who is in which treatment group, giving a double-blind RCT.
 
-In Chapter \@ref(phacking), we noted that the rate of false positive results in a study can be increased by p-hacking, where many outcome measures are included but only the "significant" ones are reported. This problem has been recognised in the context of clinical trials for many years, which is why clinical trial protocols are usually registered specifying a primary outcome measure of interest: indeed, many journals will not accept a trial for publication unless it has been registered on a site such as https://clinicaltrials.gov/. Secondary outcome measures can also be specified, but reporting of analyses relating to these outcomes should make it clear that they are much more exploratory. In principle, this should limit the amount of data dredging for an effect that is loosely related to the hypothesis of interest (typically, "is the intervention effective?"). In practice, researchers do frequently engage in "outcome switching", which is not detected unless readers bother to check against the original trial registration (@goldacre2019).  
+In Chapter \@ref(phacking), we noted that the rate of false positive results in a study can be increased by p-hacking, where many outcome measures are included but only the "significant" ones are reported. This problem has been recognised in the context of clinical trials for many years, which is why clinical trial protocols are usually registered specifying a primary outcome measure of interest: indeed, many journals will not accept a trial for publication unless it has been registered on a site such as https://clinicaltrials.gov/. Secondary outcome measures can also be specified, but reporting of analyses relating to these outcomes should make it clear that they are much more exploratory. In principle, this should limit the amount of data dredging for an effect that is loosely related to the hypothesis of interest (typically, "is the intervention effective?"). In practice, researchers do frequently engage in "outcome switching", which is not detected unless readers bother to check against the original trial registration [@goldacre2019].  
 
 RCTs have become such a bedrock of medical research that standards for reporting them have been developed. In Chapter \@ref(dropouts) we saw the CONSORT flowchart, which is a useful way of documenting the flow of participants through a trial. CONSORT stands for Consolidated Standards of Reporting Trials, which are endorsed by many medical journals. Indeed, if you plan to publish an intervention study in one of those journals, you are likely to be required to show you have followed the guidelines. The relevant information is available on the 'Enhancing the QUAlity and Transparency Of health Research' [EQUATOR](http://www.equator-network.org) network website. The EQUATOR network site covers not only RCTs but also the full spectrum guidelines of most types of clinical research designs. 
 
@@ -50,7 +50,7 @@ The answer to the question "How should I analyse my data?" depends crucially on 
 
 ### Sample dataset with illustrative analysis
 <!-- would be nice to use a real dataset here?-->
-```{r piratefigRCT,echo=F,fig.cap='Simulated data for a RCT with one control and one intervention group'}    
+```{r piratefigRCT,echo=F,fig.cap='Simulated data for a RCT with one control and one intervention group',warning=F,message=F}    
 # Change the data into long format, see 
 
 
@@ -104,7 +104,7 @@ If all is well with the data, the next step is just to compute some basic statis
 ### Simple t-test on outcome data  
 The simplest way of measuring the intervention effect is to just compare outcome measures on a t-test. We can use a one-tailed test with confidence, given that we anticipate vocabulary outcomes will be better after intervention.  One-tailed tests are often treated with suspicion, because they can be used by researchers engaged in p-hacking (see Chapter \@ref(phacking), but where we predict a directional effect, they are entirely appropriate and give greater power than a two-tailed test: see [this blogpost by Daniël Lakens](http://daniellakens.blogspot.com/2016/03/one-sided-tests-efficient-and-underused.html). When reporting the result of a t-test, always report all the statistics: the value of t, the degrees of freedom, the means and SDs, and the confidence interval around the mean difference, as well as the p-value. This not only helps readers understand the magnitude and reliability of the effect of interest: it also means that the study can readily be incorporated in a meta-analysis. Results from a t-test for the data in Table \@ref(tab:table2gp) are shown in Table \@ref(tab:ttestoutcomes). Note that with a one-tailed test, the confidence interval on one side will extend to infinity: this is because a one-tailed test assumes that the true result is greater than a specified mean value, and disregards results that go in the opposite direction.  <!-- not sure that is at all clear-->
 
-```{r ttestoutcomes,echo=F,tab.caption='T-test on outcomes'}
+```{r ttestoutcomes,echo=F,tab.caption='T-test on outcomes',warning=F,message=F}
 myt1 <- t.test(-mydf$Y~mydf$Group,var.equal=T,alternative='greater')
 
 mytabt <- c(round(myt1$statistic,3),round(myt1$parameter,0), round(myt1$p.value,3),round(myt1$estimate[1]-myt1$estimate[2],3),round(myt1$conf.int,3))
@@ -170,7 +170,7 @@ ftable
 Note which analysis method was used to estimate the intervention effect.  
 Did the researchers provide enough information to give an idea of the effect size, or merely report p-values? Did the analysis method take into account baseline scores in an appropriate way?  
 
-2. In Chapter \@ref(drawbacks) we consider drawbacks of the RCT design. Before you read this chapter, see if you can anticipate the issues that we consider in our evaluation. 
+2. In Chapter \@ref(drawbacks) we consider drawbacks of the RCT design. Before you read that chapter, see if you can anticipate the issues that we consider in our evaluation. 
 
 
 
