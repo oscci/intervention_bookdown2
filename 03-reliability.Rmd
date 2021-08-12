@@ -20,9 +20,25 @@ The key questions to ask are:
 
 1.	Is the measure reliable?
 2.	Is it valid? i.e., does it measure what I want to measure?
-3. Are there norms?
+3.  Are there norms?
 4.	Is it sensitive?
 5.	Is it practical?
+
+
+```{r, fig.align="center", echo=FALSE}
+knitr::include_graphics("images/paleblueline.png")
+``` 
+
+#### Types of numerical measurement{-}
+<p style="font-family: Times;font-size: 14px"><code>Results from an measurement in an intervention study are typically represented as numbers, but different types of measurement have different properties.  
+- **Nominal**, also known as categorical, data is just used to designate qualitative information. For instance, we may record data as 1, 2 or 3 to indicate the school that a child attends. The order of the numbers here is arbitrary, and the information could equally well be represented by letters, e.g. school A, B and C. It would make no sense to perform numerical operations such as addition and subtraction on such numbers.  
+- For **ordinal** data, the order of the numbers matters. For instance, if we had a 3 point scale of fluency, a person with a score of 3 would be more fluent than one with a score of 2, who would in turn be more fluent than a person who scored 1. In effect ordinal data describes ordered categories, but again, you can't sensibly perform arithmetical operations on such data, though you can specify a median or mode to represent the most typical score.  
+- Data on an **interval scale** are commonly found in behavioural studies. Here, the numbers are equally spaced, so the difference between 1 and 2 is the same quantity as the difference between 3 and 4. With interval data, we can compute an average and conduct many types of statistical test that are not possible with ordinal data.  
+- The most sophisticated type of numerical measurement is the **ratio scale**, which has all the properties of interval data, plus it has a meaningful zero point. Weight, height,  length and duration are all measured on a ratio scale: a zero measurement indicates there is no weight, height, length or duration. On this kind of scale, one can meaningfully interpret multiplication - e.g. 4 kg is twice as much as 2 kg.  
+Most commonly used statistical procedures assume data is at least on an interval scale.  If you are using ordinal data, then a different kind of test using *nonparametric* statistics is required. </code></p>
+```{r, fig.align="center", echo=FALSE}
+knitr::include_graphics("images/paleblueline.png")
+```
 
 
 
