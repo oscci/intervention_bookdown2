@@ -2,6 +2,9 @@
 
 ```{r,echo=F,warning=F,message=F}
 require(psych) #for describeBy
+library(rstatix) #for ancova
+library(yarrr) # for pirate plots (see below)
+library(nlme)
 ```
 The randomised controlled trial (RCT) is regarded by many as the gold standard method for evaluating interventions. In the next chapter we will discuss some of the limitations of this approach that can make it less than ideal for evaluating certain kinds of non-medical interventions. But in this chapter we'll look at the ingredients of a RCT that make it such a well-regarded method, and introduce the basic methods that can be used to analyse the results.
 
@@ -49,64 +52,45 @@ The answer to the question "How should I analyse my data?" depends crucially on 
 - Plot data to get sense of likely range of results
 
 ### Sample dataset with illustrative analysis
-<!-- would be nice to use a real dataset here?-->
+To illustrate data analysis, we will use a real dataset that can be retrieved from the ESRC data archive [@burgoyne2016]. We will focus only on a small subset of the data, which comes from an intervention study in which teaching assistants administered an individual reading and language intervention to children with Down syndrome. A wait-list RCT design was used (see Chapter \@ref(crossover)), but we will focus here on just the first two phases, in which half the children were randomly assigned to intervention, and the remainder formed a control group.  Several language and reading measures were included in the study: here we will just focus on one of these - expressive information - which was administered at baseline (t1) and immediately after the intervention (t2). Results from the full study have been reported by @burgoyne2012. 
+
 ```{r piratefigRCT,echo=F,fig.cap='Simulated data for a RCT with one control and one intervention group',warning=F,message=F}    
-# Change the data into long format, see 
+dsdat <- read.csv("data/dse-rli-trial-data-archive.csv")
 
-
-library(yarrr) # for pirate plots (see below)
-set.seed(1981)
-mySDs<-c(0.25,1,3) #various standard deviations (SD)
-myES<-0.5 #effect size for difference between groups (you can try changing this)
-myN<-30
- 
-#Simulate data for two groups each with different SDs
-myvectorA<-c(rnorm(n = myN, mean = 0, sd = mySDs[1]),rnorm(n = myN, mean = myES, sd = mySDs[1]))
-myvectorB<-c(rnorm(n = myN, mean = 30, sd = 10),rnorm(n = myN, mean = 35, sd=10))
-myvectorC<-c(rnorm(n = myN, mean = 0, sd = mySDs[3]),rnorm(n = myN, mean = myES, sd = mySDs[3])) 
-    
-#Combine the data into a single dataframe (like a spreadsheet within R).
-mydf <- data.frame(X=myvectorA,Y=myvectorB,Z=myvectorC, Group=rep(c('A','B'),each=myN)) #NA indicates missing data
-    
-# Change the data into long format, see 
-mydf_long<-gather(mydf,key='Study',value='Score',-Group)
-
-    
-pirateplot(Score~Group,theme=1,cex.lab=1.5,data=mydf_long[mydf_long$Study=='Y',], point.o=1, xlab="", ylab="Vocabulary score")
+dsdat$group <- as.factor(dsdat$group)
+levels(dsdat$group)<-c("Intervention","Control")
+dsdat$pretest <- dsdat$letter_sound_t1
+dsdat$posttest <- dsdat$letter_sound_t2
+pirateplot(posttest~group,theme=1,cex.lab=1.5,data=dsdat, point.o=1, xlab="", ylab="Post-intervention score")
     
 ```
-Figure \@ref(fig:piratefigRCT) shows results on an outcome measure from two groups from a fictitious study that compares the impact of vocabulary training on children's word knowledge in a sample of 4-year-olds. 
-
-A case like this, where two groups receive an intervention or control condition in the same period is referred to as a two arm parallel group design - a very common design in RCTs.  Allocation to intervention was randomised, and thirty children received individualised intervention over a period of three months, while the remainder received an equivalent amount of time with the therapist having "business as usual", but without a focus on vocabulary. The primary outcome measure was raw score on a standardized vocabulary test. This had also been administered at baseline, but we will focus first just on the outcome results. 
+Figure \@ref(fig:piratefigRCT) shows results on expressive information after intervention for the two groups.  This test had also been administered at baseline, but we will focus first just on the outcome results. 
 
 Raw data should always be inspected prior to any data analysis, in order to just check that the data look sensible. One hears of horror stories where, for instance, an error code of 999 got included in an analysis, distorting all the statistics. Or where an IQ score was entered as 10 rather than 100. Visualising the data is useful when checking whether the results are in the right numerical range for the particular outcome measure.  
 
-A related step is to check whether the distribution of the data meets the assumptions of the proposed statistical analysis. Many common statistical procedures assume that data are normally distributed on an interval scale (see Chapter \@ref(reliability)). Statistical approaches to checking of assumptions are beyond the scope of this book, but there are good sources of information on the web, such as [this website](http://www.sthda.com/english/articles/39-regression-model-diagnostics/161-linear-regression-assumptions-and-diagnostics-in-r-essentials/) for linear regression. But just eyeballing the data is useful, and can detect obvious cases of non-normality, cases of ceiling or floor effects, or "clumpy" data, where only certain values are possible. Data with these features may need special treatment and it is worth consulting a statistician if they apply to your data.  
+A related step is to check whether the distribution of the data meets the assumptions of the proposed statistical analysis. Many common statistical procedures assume that data are normally distributed on an interval scale (see Chapter \@ref(reliability)). Statistical approaches to checking of assumptions are beyond the scope of this book, but there are good sources of information on the web, such as [this website](http://www.sthda.com/english/articles/39-regression-model-diagnostics/161-linear-regression-assumptions-and-diagnostics-in-r-essentials/) for linear regression. But just eyeballing the data is useful, and can detect obvious cases of non-normality, cases of ceiling or floor effects, or "clumpy" data, where only certain values are possible. Data with these features may need special treatment and it is worth consulting a statistician if they apply to your data.  Although neither distribution has an classically normal distribution, we do not see major problems with ceiling or floor effects, and there is a reasonable spread of scores in both groups.  
 <!-- maybe add a figure showing egs of nonnormal distribution, ceiling effect, clumpy data-->
-```{r table2gp,echo=F,message=F,warning=F,tab.cap='Means for intervention and control groups on outcome measure'}
 
 
-#NB now modified to show just a single 2 group study (ignore vectors A and C)
+```{r DSlettersound,echo=F}
 
-
-#for the table we just want means and SDs for middle group
-mytab <- psych::describeBy(mydf$Y, group=mydf$Group,mat=TRUE,digits=3)
+mytab <- psych::describeBy(dsdat$posttest, group=dsdat$group,mat=TRUE,digits=3)
 mytab <- mytab[,c(2,4:6)]
 colnames(mytab)<-c('Group','N','Mean','SD')
-mytab[1:2,1]<-c("Control","Intervention")
+mytab[1:2,1]<-c("Intervention","Control")
 ft <- flextable(mytab)
 ft
-
 ```
 
-If all is well with the data, the next step is just to compute some basic statistics to get a feel for the effect size. Table \@ref(tab:table2gp) shows the mean and standard deviation on the outcome measure for each group. The mean is the average of the individual blobs shown in \@ref(fig:piratefigRCT), obtained by just summing all scores and dividing by the number of cases. The standard deviation gives an indication of the spread of scores around the mean. As discussed in Chapter \@ref(power), the SD is a key statistic for measuring an intervention effect. In these results, one mean is higher than the other, but there is overlap between the groups.  Statistical analysis gives us a way of quantifying how much confidence we can place in the group difference: in particular, how likely is it that there is no real impact of intervention and the observed results just reflect the play of chance.  In this case we can see that the difference between means is around 3 points and the average SD is about 10, so the effect size (Cohen's _d_) is about .3. One you become familiar with data of this kind, you may already have a sense that with data like this and a sample size of 30 per group we are unlikely to reject the null hypothesis. 
+
+The next step is just to compute some basic statistics to get a feel for the effect size. Table \@ref(tab:table2gp) shows the mean and standard deviation on the outcome measure for each group. The mean is the average of the individual blobs shown in \@ref(fig:piratefigRCT), obtained by just summing all scores and dividing by the number of cases. The standard deviation gives an indication of the spread of scores around the mean. As discussed in Chapter \@ref(power), the SD is a key statistic for measuring an intervention effect. In these results, one mean is higher than the other, but there is overlap between the groups.  Statistical analysis gives us a way of quantifying how much confidence we can place in the group difference: in particular, how likely is it that there is no real impact of intervention and the observed results just reflect the play of chance.  In this case we can see that the difference between means is around 2 points and the average SD is just above 7, so the effect size (Cohen's _d_) is about .3 - a fairly typical effect size for many language interventions. 
 
 ### Simple t-test on outcome data  
-The simplest way of measuring the intervention effect is to just compare outcome measures on a t-test. We can use a one-tailed test with confidence, given that we anticipate vocabulary outcomes will be better after intervention.  One-tailed tests are often treated with suspicion, because they can be used by researchers engaged in p-hacking (see Chapter \@ref(phacking)), but where we predict a directional effect, they are entirely appropriate and give greater power than a two-tailed test: see [this blogpost by Daniël Lakens](http://daniellakens.blogspot.com/2016/03/one-sided-tests-efficient-and-underused.html).  
+The simplest way of measuring the intervention effect is to just compare outcome measures on a t-test. We can use a one-tailed test with confidence, given that we anticipate outcomes will be better after intervention.  One-tailed tests are often treated with suspicion, because they can be used by researchers engaged in p-hacking (see Chapter \@ref(phacking)), but where we predict a directional effect, they are entirely appropriate and give greater power than a two-tailed test: see [this blogpost by Daniël Lakens](http://daniellakens.blogspot.com/2016/03/one-sided-tests-efficient-and-underused.html).  
 When reporting the result of a t-test, always report all the statistics: the value of t, the degrees of freedom, the means and SDs, and the confidence interval around the mean difference, as well as the p-value. This not only helps readers understand the magnitude and reliability of the effect of interest: it also means that the study can readily be incorporated in a meta-analysis. Results from a t-test for the data in Table \@ref(tab:table2gp) are shown in Table \@ref(tab:ttestoutcomes). Note that with a one-tailed test, the confidence interval on one side will extend to infinity: this is because a one-tailed test assumes that the true result is greater than a specified mean value, and disregards results that go in the opposite direction.  <!-- not sure that is at all clear-->
 
 ```{r ttestoutcomes,echo=F,tab.cap='T-test on outcomes',warning=F,message=F}
-myt1 <- t.test(-mydf$Y~mydf$Group,var.equal=T,alternative='greater')
+myt1 <- t.test(dsdat$posttest~dsdat$group,var.equal=T,alternative='greater')
 
 mytabt <- c(round(myt1$statistic,3),round(myt1$parameter,0), round(myt1$p.value,3),round(myt1$estimate[1]-myt1$estimate[2],3),round(myt1$conf.int,3))
 mytabt <- as.matrix(mytabt,ncol=6)
@@ -132,14 +116,84 @@ knitr::include_graphics("images/paleblueline.png")
 
 
 ### T-test on difference scores  
-The t-test on outcomes is easy to do, but it misses an opportunity to control for one unwanted source of variation, namely individual differences in the initial level of vocabulary. For this reason, researchers often prefer to take difference scores: the difference between outcome and baseline measures, and apply a t-test to these. While this had some advantages over reliance on raw outcome measures, it also has disadvantages, because the amount of change that is possible from baseline to outcome is not the same for everyone. A child with a very low score at baseline has more "room for improvement" than one who has an average score. For this reason, analysis of difference scores is not generally recommended.  
+The t-test on outcomes is easy to do, but it misses an opportunity to control for one unwanted source of variation, namely individual differences in the initial level of the language measure. For this reason, researchers often prefer to take difference scores: the difference between outcome and baseline measures, and apply a t-test to these. While this had some advantages over reliance on raw outcome measures, it also has disadvantages, because the amount of change that is possible from baseline to outcome is not the same for everyone. A child with a very low score at baseline has more "room for improvement" than one who has an average score. For this reason, analysis of difference scores is not generally recommended.  
 
 ### Analysis of covariance on outcome scores  
 Rather than taking difference scores, it is preferable to analyse differences in outcome measures after making a statistical adjustment that takes into account the initial baseline scores. In practice, this method usually gives results that are very similar to those you would obtain from an analysis of difference scores, but the precision, and hence the statistical power is greater.  
 
+```{r ancova,echo=F,tab.cap='Ancova: comparing outcomes with pretest as covariate',warning=F,message=F}
+
+#https://www.datanovia.com/en/lessons/ancova-in-r/
+
+#plot to check linearity by eye
+ggscatter(
+  dsdat, x = "pretest", y = "posttest",
+  color = "group", add = "reg.line"
+  )+
+  stat_regline_equation(
+    aes(label =  paste(..eq.label.., ..rr.label.., sep = "~~~~"), color = group)
+    )
+#check homogeneity of regression slopes
+dsdat %>% anova_test(posttest ~ group*pretest)
+
+#normality of residuals
+# Fit the model, the covariate goes first
+model <- lm(posttest ~ pretest  + group, data = dsdat)
+# Inspect the model diagnostic metrics
+model.metrics <- augment(model) %>%
+  select(-.hat, -.sigma, -.fitted) # Remove details
+head(model.metrics, 3)
+shapiro_test(model.metrics$.resid) #check normality of residuals
+
+# order of variables matters when computing ANCOVA. You want to remove the effect of the covariate first - that is, you want to control for it - prior to entering your main variable or interest.
+res.aov <- dsdat %>% anova_test(posttest ~ pretest +group)
+get_anova_table(res.aov)
+
+
+# Pairwise comparisions
+
+library(emmeans)
+pwc <- dsdat %>% 
+  emmeans_test(
+    posttest ~ group, covariate = pretest,
+    p.adjust.method = "bonferroni"
+    )
+pwc
+
+# Visualization: line plots with p-values
+pwc <- pwc %>% add_xy_position(x = "group", fun = "mean_se")
+ggline(get_emmeans(pwc), x = "group", y = "emmean") +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) + 
+  stat_pvalue_manual(pwc, hide.ns = TRUE, tip.length = FALSE) +
+  labs(
+    subtitle = get_test_label(res.aov, detailed = TRUE),
+    caption = get_pwc_label(pwc)
+  )
+
+```
+
+<!-- see Twisk 2018 for ancova etc-->
+
 ### Linear mixed models (LMM) approach  
 Increasingly, reports of RCTs are using more sophisticated and flexible methods of analysis that can, for instance, cope with datasets that have missing data, or where distributions of scores are non-normal. 
 
+```{r lmm-rct}
+#put data in long format
+vars1<-c('subject_id','group','pretest')
+vars2<-c('subject_id','group','posttest')
+half1<-dsdat[,vars1]
+half2<-dsdat[,vars2]
+colnames(half1)[3]<-'measurement'
+colnames(half2)[3]<-'measurement'
+long_all <- rbind(half1,half2)
+long_all$time<-2
+long_all$time[1:nrow(dsdat)]<-1
+colnames(long_all)[1]<-'id'
+
+mymodel <- lme(fixed=measurement~time*group, random= ~1|id, na.action=na.exclude, method="REML", data = long_all)
+summary(mymodel)
+
+```
 An advantage of the LMM approach is that it can be extended in many ways to give appropriate estimates of intervention effects in more complex trial designs - some of which are covered in Chapter \@ref(adaptive) to Chapter \@ref(singlecase)). Disadvantages of this approach are that it is easy to make mistakes in specifying the model for analysis if you lack statistical expertise, and the output is harder for non-specialists to understand.  If you have a simple design, such as that illustrated in this chapter, we would recommend that you start with a basic analysis of covariance to get a sense of the size of the intervention effect; results from a LMM should give greater precision of estimates, but effect sizes should be in the same basic ballpark range.  
 <!--- Paul's help needed here-->
 <!--- NB it would be fun to compare these different methods on a single dataset using DeclareDesign - I may try if I get the time-->
