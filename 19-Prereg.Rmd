@@ -21,8 +21,6 @@ knitr::include_graphics("images/paleblueline.png")
 knitr::include_graphics("images/paleblueline.png")
 ```
 
-
-
 ## Registered Reports  
 Michael Mahoney, whose book was mentioned in Chapter \@ref(pubbias), provided an early demonstration of publication bias with his little study of journal reviewers [@mahoney1976]. Having found that reviewers are far too readily swayed by a paper's results, he recommended: _Manuscripts should be evaluated solely on the basis of their relevance and their methodology. Given that they ask an important question in an experimentally meaningful way, they should be published - regardless of their results._ (p. 105).
 
