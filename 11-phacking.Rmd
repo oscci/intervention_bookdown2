@@ -1,8 +1,7 @@
 # False positives, p-hacking and multiple comparisons {#phacking}
 
-<!---Paul -I have messed around with the permutations bit and am not 100% sure I have it right - in trying to explain it to others I realised I may have got the wrong end of the stick. 
-But more generally, I think this chapter gets too complicated - particularly the material after the Bonferroni. Need to discuss how to handle it. It might be possible to simplify it further and just refer on to other sources. If there aren't good clear descriptions available, we could possibly could put it an appendix?
-Another option would be to actually shift this stuff into Exercises at the end - i.e. flag up this is a more technical exercise, but point them to sources on BH and BY and get them to do some sums themselves? I think that way, people could treat it as optional for those who are more numerate.  
+<!---Paul - I think this chapter was too complicated - particularly the material after the Bonferroni. Need to discuss how to handle it. It might be possible to simplify it further and just refer on to other sources. 
+I have substituted an alternative for the FDR/permutations material - see what you think.
 But I think the main thing is to get them to understand why p-hacking is a problem, and that you need to correct for multiple comparisons, without getting too bogged down in difficult stuff-->
 
 
@@ -24,7 +23,7 @@ library(flextable)
 Let us look again at the table of possible outcomes that can arise if we use p-values to decide if a result is statistically significant or not, shown here as \@ref(table:confusionMat2a). In this chapter, our focus will be on the top right hand corner - the False Positive. 
 
   
-```{r confusionMat2a, echo=FALSE, message=FALSE, warnings=FALSE,results='asis',tab.caption="Possible outcomes of Null Hypothesis Statistical Test"}
+```{r confusionMat2a, echo=FALSE, message=FALSE, warnings=FALSE,results='asis',tab.cap="Possible outcomes of Null Hypothesis Statistical Test"}
 options(kableExtra.html.bsTable = T)
 mymat<-matrix(NA,nrow=2,ncol=3)
 
@@ -47,7 +46,7 @@ knitr::kable(mymat,escape = F, align = "c", booktabs = T) %>%
 
 ### Type I error
 
-A **Type I error** is a **false positive**, which occurs when the null hypothesis is rejected but a true effect is not actually present. One useful mnemonic for distinguishing Type I and Type II errors is to think of the sequence of events in the fable of the boy who cried wolf. This boy lived in a remote village and he used to have fun running out to the farmers in the fields and shouting "Wolf! Wolf!" and watching them all run inside. The farmers were making an (understandable) Type I error, of concluding there was a wolf when in fact there was none.  One day, however, a wolf turned up. The boy ran into the fields shouting "Wolf! Wolf!" but nobody took any notice of him, because they were used to his tricks. Sadly, all the sheep got eaten because the villagers had made a Type II error, assuming there was no wolf when there really was one.  
+A **Type I error** is a **false positive**, which occurs when the null hypothesis is rejected but a true effect is not actually present. One useful mnemonic for distinguishing Type I and Type II errors is to think of the sequence of events in the fable of the boy who cried wolf. This boy lived in a remote village and he used to have fun running out to the farmers in the fields and shouting "Wolf! Wolf!" and watching them all get alarmed. The farmers were making an (understandable) Type I error, of concluding there was a wolf when in fact there was none.  One day, however, a wolf turned up. The boy ran into the village shouting "Wolf! Wolf!" but nobody took any notice of him, because they were used to his tricks. Sadly, all the sheep got eaten because the villagers had made a Type II error, assuming there was no wolf when there really was one.  
 <!-- dorothy to try and get a picture of boy who cried wolf-->
 
 The type I error rate is controlled by setting the significance criterion, $\alpha=0.05$, at 5%, or sometimes more conservatively 1% ($\alpha=0.01$). With $\alpha=0.05$, on average 1 in 20 statistically significant results will be false positives; when it is .01, then 1 in 100 will be false positives. The .05 cutoff is essentially arbitrary, but very widely adopted in the medical and social sciences literature, though debate continues as to whether a different convention should be adopted [@benjamin2018, @lakens2018].  
@@ -66,9 +65,9 @@ We assume in the example above that the researcher would have been equally likel
 - The probability that *all five measures* give a _nonsignificant_ result is found by multiplying the probabilities for the five tasks:  .95 * .95 * .95 * .95 * .95 = .77.
 - So it follows that the probability that _at least one_ measure gives a significant result (p-value < .05) is 1-.77 = .23.
 
-In other words, with five measures to consider, the probability that _at least one of them_ will give us p < .05 is not 1 in 20 but 1 in 4. The more measures there are, the worse it gets.  We will discuss solutions to this issue below (see Multiple hypothesis testing).  
+In other words, with five measures to consider, the probability that _at least one of them_ will give us p < .05 is not 1 in 20 but 1 in 4. The more measures there are, the worse it gets.  We will discuss solutions to this issue below (see Multiple testing).  
 
-Psychologists have developed a term to talk about the increase in false positives that arises when people pick out results on the basis that they have a p-value of .05, regardless of the context - *p-hacking* [@simonsohn2014a]. @bishop2016a coined the term *ghost variable* to refer to a variable that was measured but was then not reported because it did not give significant results - making it impossible to tell that p-hacking had occurred. Another term, *HARKing*, or "hypothesising after the results are known" [@kerr1998] is used to describe the tendency to rewrite not just the Discussion but also the Introduction of a paper to fit the result that has been obtained. Sadly, researchers are not just unaware that these behaviours can dramatically increase the rate of false positives in the literature - they are often encouraged by senior figures to adopt exactly these practices: a notorious example is that of @bem2004.  Perhaps the most common error is to regard a p-value as a kind of inherent property of a result that reflects its importance regardless of context. In fact, context is absolutely key: a single p-value below .05 has a very different meaning in a study where you only had one outcome measure than in a study where you tested several measures in case _any_ of them gave an interesting result. 
+Psychologists have developed a term to talk about the increase in false positives that arises when people pick out results on the basis that they have a p-value of .05, regardless of the context - *p-hacking* [@simonsohn2014a]. @bishop2016 coined the term *ghost variable* to refer to a variable that was measured but was then not reported because it did not give significant results - making it impossible to tell that p-hacking had occurred. Another term, *HARKing*, or "hypothesising after the results are known" [@kerr1998] is used to describe the tendency to rewrite not just the Discussion but also the Introduction of a paper to fit the result that has been obtained. Sadly, many researchers are not unaware that these behaviours can dramatically increase the rate of false positives in the literature. Furthermore,  they may be encouraged by senior figures to adopt exactly these practices: a notorious example is that of @bem2004.  Perhaps the most common error is to regard a p-value as a kind of inherent property of a result that reflects its importance regardless of context. In fact, context is absolutely key: a single p-value below .05 has a very different meaning in a study where you only had one outcome measure than in a study where you tested several measures in case _any_ of them gave an interesting result. 
 
 A related point is that you should *never generate and test a hypothesis using the same data*. After you have run your study, you may be enthusiastic about doing further research with a specific focus on the comprehension outcome measure. That's fine, and in a new study with specific predictions about comprehension you could adopt $\alpha$ of .05 without any corrections. Problems arise when you subtly change your hypothesis _after seeing the data_ from "Do _any_ of these N measures show interesting results?" to "Does comprehension improve after intervention?", and apply statistics as if the other measures had not been considered.  
 
@@ -89,7 +88,7 @@ There are several ways we can defend ourselves against a proliferation of false 
 - "Multiverse analysis": explicitly conducting all possible analyses to test how particular analytic decisions affected results.  This is beyond the scope of this book, as it is more commonly adopted in non-intervention research contexts [@steegen2016] when analysis of associations between variables is done with pre-existing data sets.  
 
 
-## Adjusting statistics for multiple hypothesis testing  
+## Adjusting statistics for multiple testing  
 
 As noted above, even when we have a well-designed and adequately powered study, if we collect multiple outcome variables, or if we are applying multiple tests to the same data, then we increase our chance of finding a false positive. Remember that if we set $\alpha$ to .05 and apply $k$ tests to our data, then the probability of finding at least one false positive is given by $1-(1-\alpha)^{k}$. This is officially known as the family-wise error rate (FWER).  
 
@@ -104,7 +103,7 @@ ggplot(data=fwe_dat,aes(k,FWE,type="l"))+geom_line(size=1.2,colour="blue")+theme
 Figure \@ref(fig:familywise) shows the relationship between the familywise error rate and the number of tests conducted on the data. Note that the left-most point of the blue line corresponds to the case when we have just one statistical test, and the probability of a false positive is .05, exactly where we would expect. The dotted line shows the case where we performed 10 tests (k = 10), increasing our chance of obtaining a false positive to approximately 40%.  Clearly, the more tests applied, the greater the increase in the chance of at least one false positive result. Although it may seem implausible that anyone would conduct 100 tests, the number of implicit tests can rapidly increase if sequential analytic decisions multiply, as shown in the Garden of Forking Paths example, where we subdivided the analysis 4 times, to give 2^4 = 16 possible ways of dividing up the data. 
 
 
-There are many different ways to adjust for the multiple testing in practice. We shall discuss some of the most commonly applied.
+There are many different ways to adjust for the multiple testing in practice. We shall discuss the approaches that are most suitable for the context of intervention research.
 
 ### Bonferroni Correction
 The Bonferroni correction is both the simplest and most popular adjustment for multiple testing. The test is described as "protecting the type I error rate", i.e. if you want to make a false positive error only 1 in 20 studies, the Bonferroni correction specifies a new $\alpha$ level that is adjusted for the number of tests. The Bonferroni correction is very easy to apply: you just divide your desired false positive rate by the number of tests conducted.  
@@ -117,15 +116,19 @@ The Bonferroni correction is widely used due to its simplicity but it can be ove
 
 ```{r simulated-corr,echo=F,include=T,tab.cap='Adjusted alpha-value to give 1 in 20 false positives for correlated outcome measures'}
 mycorr <- c(0,.2,.4,.6,.8)
-mynvar <- c(2,4,6,8)
+mynvar <- c(2,4,6,8,10,12)
 maxn <- max(mynvar)
-nsim <- 5000
+nsim <- 10000 #saved file has nsim of 10000
 
-# To run the simulation, which can take a few minutes, set runsim to 1.
-# If runsim is zero, we read in results from file instead.
-runsim <- 0
+# SKIPSIM controls how this chunk works. 
+# If skipsim is zero,we run all the simulation, which can take minutes
+# If skipsim is 1, we read in big results from file instead, but still compute the summary tables
+# NB the big results are NOT saved on github as they are too big, so they are read from local disk
+# Set skipsim to 2 for fastest build; just the summaries are read from file, 
+# These summaries are also saved on github.
+skipsim <- 2
 
-if(runsim==1){
+if(skipsim==0){
 #dataframe to hold p-values for each variable, comparing A and B
 resultsdf <- data.frame(matrix(NA,nrow=nsim*length(mycorr),ncol=maxn+2+length(mynvar)))
 colnames(resultsdf) <-c('run','corr',paste0('V',1:maxn),paste0('minp',mynvar) ) 
@@ -160,11 +163,16 @@ for (i in 1:nrow(resultsdf)){
     resultsdf[i,thiscol]<-min(resultsdf[i,(2+(1:n))])
   }
 }
-
-    
+write.csv(resultsdf,'data/rawsims_corr_vars_10000runs.csv',row.names=F)
+}
+if(skipsim==1){
+  resultsdf <- read.csv('data/rawsims_corr_vars_10000runs.csv')
+  #resultsdf is v large and is not saved on github
+}
 
 # we use this to populate summarydf, which holds critical alphas based on quantiles of p-values
 # to check this, also create fpdf, which is similar but holds FP rate at .05
+if(skipsim<2){
 fpdf<-summarydf
 thisrow <- 0
 for (c in mycorr){
@@ -182,26 +190,118 @@ for (c in mycorr){
    
   }
 }
-write.csv(summarydf,'data\adj_alphas_corr_vars.csv',row.names=F)
-write.csv(fpdf,'data\fprates_corr_vars.csv',row.names=F)
-write.csv(resultsdf,'data\rawsims_corr_vars_10000runs.csv',row.names=F)
+write.csv(summarydf,'data/adj_alphas_corr_vars.csv',row.names=F)
+write.csv(fpdf,'data/fprates_corr_vars.csv',row.names=F)
 }
-
-if(runsim==0){
-  summarydf <- read.csv('data\adj_alphas_corr_vars.csv')
+if(skipsim==2){
+  summarydf <- read.csv('data/adj_alphas_corr_vars.csv')
+  fpdf <- read.csv('data/fprates_corr_vars.csv')
 }
 
 ft <- flextable(round(summarydf,3))
+ft <- set_caption(ft,'Adjusted alpha values for multiple (N) correlated variables to achieve false positive rate of 1 in 20')
+
+ft
+ft2 <- flextable(round(fpdf,3))
+ft2 <- set_caption(ft2,'False positive rates if uncorrected alpha of .05 used with multiple correlated variables')
+ft2
+```
+Table \@ref(tab:simulated-corr) shows the significance threshold that we'd need to use to get a false positive rate of 1 in 20, if there are either 2, 4, 6, 8, 10 or 12 correlated outcome variables. The top row shows the case for uncorrelated variables, and the significance cutoffs are very close to those that you would get by just applying the Bonferroni correction. As the average correlation between outcomes (shown in the left-most column) increases, the adjusted significance level becomes somewhat less severe, but in practice we can see that for realistic scenarios in an intervention study, the difference is not large. Researchers could be justified in substituting the significance cutoffs from Table \@ref(tab:simulated-corr) for the Bonferroni correction, but it is unlikely to make a large difference to outcomes.  
+
+We used the same simulated data to compute the false positive rate that would arise if the researcher just ignored the problems of running tests on multiple measures. The lower section of Table \@ref(tab:simulated-corr) reinforces the importance of adopting a statistical correction, rather than assuming it is acceptable to stick with the .05 significance level while running tests on many outcome measures. For instance, with 6 outcome measures that are intercorrelated at r = .2, the probability of a false positive result is .254.  
+
+We have focused on the case where multiple measures are taken, and *at least one* meets the conventional significance threshold of p = .05. What, though, if several measures meet that criterion? This is not uncommon in many intervention contexts, where a range of outcomes is assessed, with the expectation that the intervention may affect some or all of them, even if the researcher is unclear as to which is most likely to show the effect. Furthermore, in intervention research, the outcomes are likely to be positively intercorrelated. So suppose we have 10 outcome measures, and 5 of them give p < .05, but are above the Bonferroni corrected threshold of .005. Should we just ignore this evidence and accept the null hypothesis?
+
+The Bonferroni correction is too harsh in such a situation. Various statistical approaches have been taken to address this issue. Here, we use simple simulations of null data to discover how  many measures would need to achieve the .05 significance level for us to be reasonably confident in rejecting the null hypothesis, depending on the number of outcomes considered, and the average correlation between them.  
+<!--Paul - I can't believe others have not taken this approach, but I can't find anything. It is reasonably straightforward to simulate, and I think is much easier for nonstatisticians to understand than conventional FDR approaches-->.
+
+```{r ranked-p, echo=F}
+#We will rank order the p-values; need to do this for each N outcomes separately. 
+#For instance, if there are 4 outcomes, we rank order the p-values for V1 to V4, and store the 2nd to 4th values in p4.2 to p4.4. (We already have the lowest p-value done for the previous block).
+#If there are 8 outcomes, we rank order the p-values for V1 to V8, and store the 2nd to 8th values in p8.2 to p8.8. 
+
+#We use the same enormous file of simulated data as before - nb this is NOT saved in github so needs to be on local drive if we use skipsim values of > 0 to speed up the build.
+if(skipsim ==1){
+resultsdf <- read.csv('data/rawsims_corr_vars_10000runs_plus.csv')
+}
+
+#The next chunk is very slow - about 30 mins - to run. The results file with the columns added from this step is now save ond drive, and can therefore be read in (has _plus suffix). 
+#For skipsim 2, we just go directly to saved summary files for quicker build
+if (skipsim<2){
+#We will add columns to create for each N a ranked list of pvalues. 
+
+mynvar <- c(2,4,6,8,10,12)
+nucols <- c('p2.2','p4.2','p4.3','p4.4','p6.2','p6.3','p6.4','p6.5','p6.6','p8.2','p8.3','p8.4','p8.5','p8.6','p8.7','p8.8','p10.2','p10.3','p10.4','p10.5','p10.6','p10.7','p10.8','p10.9','p10.10','p12.2','p12.3','p12.4','p12.5','p12.6','p12.7','p12.8','p12.9','p12.10','p12.11','p12.12')
+resultsdf[,nucols]<-NA
+colstart<-which(colnames(resultsdf)=='p2.2')-1 #we will increment colcounter when new value added
+for (i in 1:nrow(resultsdf)){
+  colcounter<-colstart
+  mycols <- c("V1","V2","V3","V4","V5","V6","V7","V8","V9","V10","V11","V12")
+  thisp <- resultsdf[i,mycols]
+  for (j in mynvar){
+    thatp <- thisp[1:j]
+    for (k in 2:j){
+      colcounter<-colcounter+1
+      resultsdf[i,colcounter]<-thatp[order(thatp)[k]]
+    }
+  }
+}
+
+
+#now we can compute quantiles for these new columns - this step is also skipped if skipsim=2
+mycorr <- unique(resultsdf$corr)
+colrange <- (colstart+1):ncol(resultsdf) #range of columns in resultsdf holding the pvalues we need
+
+mynewcols <- colnames(resultsdf)[colrange]
+fpdf2 <- data.frame(matrix(NA,nrow=length(mycorr),ncol=1+length(mynewcols)))
+colnames(fpdf2) <-c('corr',mynewcols) #file to hold fp rates
+
+
+thisrow <- 0 
+  for (c in mycorr){
+    thisrow<-thisrow+1
+
+    fpdf2[thisrow,1]<-c
+    mybit <- resultsdf[resultsdf$corr==c,colrange] #select subset for this correlation
+
+  for (n in 1:length(mynewcols)){
+    thiscol<-n
+    plist <- mybit[,thiscol] #so if n is 1, this will be all the p-values at this correlation for the 2nd ranked variable in a case with 2 variables.
+    fpdf2[thisrow,(thiscol+1)]<-length(which(plist<.05))/length(plist) #false positive rate
+
+  }
+  }
+
+write.csv(fpdf2,'data/fpdf2.csv')
+}
+
+if(skipsim==2){
+fpdf2 <- read.csv('data/fpdf2.csv')
+}
+#We now just want a little table that gives the N outcomes that need to be p < .05 for overall FP rate to be maintained
+shorttab<- data.frame(matrix(NA,nrow=length(mycorr),ncol=1+length(mynvar)))
+colnames(shorttab) <-c('corr',paste0('N',mynvar)) #file to hold N significant
+shorttab[,1]<-mycorr
+for (j in 1:length(mycorr)){
+for (i in 1:length(mynvar)){
+  mysize <- mynvar[i]
+  fcol <-  which(colnames(fpdf2)== paste0('p',mysize,".2"))
+  fcols <- fcol:(fcol+mysize-2)
+  w<-min(which(fpdf2[j,fcols]<.05))
+  w<-w+1
+  if (w>mysize){w<-mysize}
+    shorttab[j,(i+1)]<-w
+}
+}
+```
+
+```{r minN,echo=F,include=T,tab.cap='Minimum number of outcomes with p < .05 that retains false positive rate at 1 in 20, depending on N outcomes'}
+ft <- flextable(shorttab)
 ft
 ```
-Table \@ref(tab:simulated-corr) shows the significance threshold that we'd need to use to get a false positive rate of 1 in 20, if there are either 2, 4, 6 or 8 correlated outcome variables. The top row shows the case for uncorrelated variables, and the significance cutoffs are very close to those that you would get by just applying the Bonferroni correction. As the correlation (shown in the left-most column) increases, the adjusted significance level becomes somewhat less severe, but in practice we can see that for realistic scenarios in an intervention study, the difference is not large. Researchers could be justified in substituting the significance cutoffs from Table \@ref(tab:simulated-corr) for the Bonferroni correction, but it is unlikely to make a large difference to outcomes.  
 
-We used the same simulated data to compute the false positive rate that would arise if the researcher just ignored the problems of running tests on multiple measures ; Table \@ref(tab:simulated-fp) reinforces the importance of adopting a statistical correction, rather than assuming it is acceptable to stick with the .05 significance level while running tests on many outcome measures. For instance, with 6 outcome measures that are intercorrelated at r = .2, the probability of a false positive result is .254. 
+Values in the body of Table \@ref(tab:minN) indicate the minimum number of outcomes that would need to be significant at the .05 level to retain a 1 in 20 false positive rate for various scenarios. For instance, with six outcome measures (N6) that had an average intercorrelation of .4, then if two or more of them gave a significant intervention effect at p < .05, this would be sufficient evidence to reject the null hypothesis. The more outcomes are considered, the greater the number that would be required to be significant in order to reject the null hypothesis using the significance criterion of .05.  
 
-```{r simulated-fp,echo=F,include=T,tab.cap='False positive rate when .05 significance level used with multiple outcomes tested'}
-ft <- flextable(round(fpdf,3))
-ft
-```
 
 ## CLASS EXERCISE  
 
@@ -209,8 +309,9 @@ This [web-based app](https://www.shinyapps.org/apps/p-hacker/) by @schonbrodt201
 - Set the True Effect slider to its default position of zero, which means that the Null Hypothesis is true - there is no true effect.  
 - Set the Number of DVs set to 2.  
 - Press "Run new experiment".  
-- The display of results selects the variable with the lowest p-value and highlights it in green. It also shows results for the average of the variables, as DV_all. 
-- Try hitting Run new experiment 20 times, and count on your fingers how often you get a p-value less than .05. With only two DVs, things are not so bad - on average you'll get two such values in 20 runs (though you may get more or less than this - if you are really keen, you could keep going for 100 runs to get a more stable estimate of the false positives).  
+- The display of results selects the variable with the lowest p-value and highlights it in green. It also shows results for the average of the variables, as DV_all.  
+
+- Try hitting Run new experiment 20 times, and keep a tally of how often you get a p-value less than .05. With only two DVs, things are not so bad - on average you'll get two such values in 20 runs (though you may get more or less than this - if you are really keen, you could keep going for 100 runs to get a more stable estimate of the false positives).  
 - Now set the number of DVs to 10 and repeat the exercise. You will probably run out of fingers on one hand to count the number of significant p-values.  
 
 Felix Schönbrodt, who devised this website, allows you to go even further with p-hacking, showing how easy it is to nudge results into significance by using covariates (e.g. adjusting for age, SES, etc) or by excluding outliers. 
