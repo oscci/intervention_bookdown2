@@ -1,5 +1,12 @@
 # Drawbacks of the two-arm RCT {#drawbacks}
 
+```{r packages-13,echo=F,warning=F,message=F}
+library(knitr)
+#library(kableExtra)
+library(flextable)
+options(kableExtra.html.bsTable = T)
+```
+
 It can be frustrating to be told that the RCT is the "gold standard" method for evaluating interventions, only to find it is impossible to implement in many settings. Consider, for instance, the case of electropalatography, a biofeedback intervention for speech sound disorders. @leniston2021 noted a number of barriers to evaluating its effectiveness through a standard RCT. The method requires expensive specialist equipment that is only available to a few speech-and-language therapists, and an individual artificial palate needs to be made for each client. The therapy is delivered over a series of sessions that can extend over several months, and requires a highly trained therapist. Thus it is simply not feasible to recruit dozens, let alone hundreds, of cases for a RCT. Masking of intervention condition is also not possible; both child and therapist know who is receiving intervention. Furthermore, children who would be eligible for this intervention are likely to be very varied, both in terms of their diagnosis and associated conditions, and in terms of the specific speech sounds that they have difficulty producing. In Chapter \@ref(crossover) and Chapter \@ref(singlecase), we describe alternative within-subject approaches to evaluation that can be used in this situation. Here, we elaborate further on the issues that are likely to be problematic when trying to apply RCT methods to interventions used by allied health professionals.
 
 
@@ -56,16 +63,11 @@ Explanatory trials (efficacy) are the most familiar trial design that is typical
 
 Pragmatic trials (effectiveness) are designed to assess interventions in a naturalistic setting which will be a far less controlled environment. In this type of trial, the intervention may differ slightly depending on the setting and patient requirement. This differs from an explanatory trial which will typically compare against a placebo condition. The pragmatic trial will also collect a range of measures that are more patient-focused rather than a biological or behavioural marker.
 
-Table \@ref(tab:step13) is reproduced from @porzsolt2015, who describe the 13 steps to assessing efficacy and effectiveness.
+Table \@ref(tab:steps-porz) is reproduced from @porzsolt2015, who described the 13 steps to assessing efficacy and effectiveness.
  <!---#I tweaked the flextable code as it had bugs but I'm not sure we need this table- or if we do, more explanation may be needed-->
  
 
-```{r step13,echo=FALSE,message=FALSE,warning=FALSE,tab.cap="Thirteen steps to assess efficacy (explanatory trial) and effectiveness (pragmatic trial)"}
-library(tidyverse)
-library(knitr)
-#library(kableExtra)
-library(flextable)
-options(kableExtra.html.bsTable = T)
+```{r steps-porz,echo=FALSE,message=FALSE,warning=FALSE,tab.cap="Thirteen steps to assess efficacy (explanatory trial) and effectiveness (pragmatic trial)"}
 
 dt13 <- matrix(c(
 '(1)',	'Phrase the primary and secondary study questions according to the principles of evidence-based medicine','',
@@ -100,7 +102,8 @@ In a RCT we assess the average effect of the intervention observed in a study sa
 
 
 
-<!--for the chickweight eg I thought it useful to explain it is chickweight, just because the experimental context is one where you might expect rather small individual differences - see below!-->
+<!--for the chickweight eg I thought it useful to explain it is chickweight, just because the experimental context is one where you might expect rather small individual differences - see below
+Alternatively - we could use a real intervention dataset to make this point!-->
 Figure \@ref(fig:interventionhet) shows data from a public dataset on body weight in chicks given either a regular diet (Control) or a new diet (Intervention). Average weight over time of intervention and control groups is shown as solid black and dotted lines respectively.  Individual chicks are plotted as separate coloured lines (red for control and blue for intervention), showing the variation in both groups around those averages.  
 
 

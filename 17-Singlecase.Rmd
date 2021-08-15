@@ -1,4 +1,5 @@
 #	Single case designs {#singlecase}
+
 ```{r, message=F,warning=F,echo=FALSE}
 library(tidyverse)
 library(kableExtra)
@@ -12,8 +13,8 @@ The single case design, also known as N-of-1 trial, or small N design, is a comm
 
 Table \@ref(tab:n-of-1-logic) shows the contrast in logic between the standard RCT and N-of-1 designs.
 
-```{r n-of-1-logic,echo=F,include=T,tab.caption= "How intervention is allocated in different study designs"}
-Design <- c('RCT','N-of-1: ABA','N-of-1: Multiple baseline')
+```{r n-of-1-logic,echo=F,include=T,tab.caption= "How intervention vs control is allocated in different study designs"}
+Design <- c('RCT','N-of-1: ABA','N-of-1: Multiple baseline across behaviours')
 Participants <- c('+','-','-')
 Time <- c('-','+','-')
 Outcome <- c('-','-','+')
@@ -24,7 +25,7 @@ ftable
 
 ```
 
-The first row of Table \@ref(tab:n-of-1-logic) shows the design for a simple 2-arm RCT, where intervention is varied between subjects who are assessed on the same occasion and on the same outcome. The second row shows a version of the N-of-1 design where the invention is varied in a single subject at different time points. The third row shows the case where intervention is assessed by comparing different outcomes in the same subject on the same occasion. In practice, aspects of these designs can be combined - e.g. the cross-over design that we saw in chapter 16 compares an intervention across two time points and two groups of subjects. 
+The first row of Table \@ref(tab:n-of-1-logic) shows the design for a simple 2-arm RCT, where intervention is varied between subjects who are assessed on the same occasion and on the same outcome. The second row shows a version of the N-of-1 design where the invention is varied in a single subject at different time points. The third row shows the case where intervention is assessed by comparing different outcomes in the same subject on the same occasion - this is referred to by @krasny-pacini2018 as a multiple baseline design across behaviours. In practice, aspects of these designs can be combined - e.g. the cross-over design that we saw in Chapter /@ref(crossover) compares an intervention across two time points and two groups of subjects. 
 
 Whatever design is used, the key requirements are 
 

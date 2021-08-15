@@ -6,6 +6,7 @@ library(rstatix) #for ancova
 library(yarrr) # for pirate plots (see below)
 library(nlme)
 library(lme4)
+library(ggpubr)
 ```
 The randomised controlled trial (RCT) is regarded by many as the gold standard method for evaluating interventions. In the next chapter we will discuss some of the limitations of this approach that can make it less than ideal for evaluating certain kinds of non-medical interventions. But in this chapter we'll look at the ingredients of a RCT that make it such a well-regarded method, and introduce the basic methods that can be used to analyse the results.
 
@@ -107,8 +108,8 @@ flextable(mytabt)
 The t-test on outcomes is easy to do, but it misses an opportunity to control for one unwanted source of variation, namely individual differences in the initial level of the language measure. For this reason, researchers often prefer to take difference scores: the difference between outcome and baseline measures, and apply a t-test to these. While this had some advantages over reliance on raw outcome measures, it also has disadvantages, because the amount of change that is possible from baseline to outcome is not the same for everyone. A child with a very low score at baseline has more "room for improvement" than one who has an average score. For this reason, analysis of difference scores is not generally recommended.  
 
 ### Analysis of covariance on outcome scores  
-Rather than taking difference scores, it is preferable to analyse differences in outcome measures after making a statistical adjustment that takes into account the initial baseline scores. In practice, this method usually gives results that are very similar to those you would obtain from an analysis of difference scores, but the precision, and hence the statistical power is greater.  However, the data do need to meet certain assumptions of the method. This [website](#https://www.datanovia.com/en/lessons/ancova-in-r/) walks through the steps for performing an ANCOVA in R, starting with a plot of  to check that there is a linear relationship between pretest vs posttest scores in both groups - i.e. the points cluster around a straight line, as shown in Figure \@ref(fig:ds-prepost).
-```{r ds-prepost,echo=F,fig.cap='Pretest vs posttest scores in the Down syndrome dataset',warning=F,message=F}
+Rather than taking difference scores, it is preferable to analyse differences in outcome measures after making a statistical adjustment that takes into account the initial baseline scores, using a method known as analysis of covariance or ANCOVA. In practice, this method usually gives results that are very similar to those you would obtain from an analysis of difference scores, but the precision, and hence the statistical power is greater.  However, the data do need to meet certain assumptions of the method. This [website](#https://www.datanovia.com/en/lessons/ancova-in-r/) walks through the steps for performing an ANCOVA in R, starting with a plot of  to check that there is a linear relationship between pretest vs posttest scores in both groups - i.e. the points cluster around a straight line, as shown in Figure \@ref(fig:ds-prepost).
+```{r ds-prepost,echo=F,fig.cap='Pretest vs posttest scores in the Down syndrome data',warning=F,message=F}
 #plot to check linearity by eye
 ggscatter(
   dsdat, x = "pretest", y = "posttest",
