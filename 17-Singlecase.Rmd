@@ -5,13 +5,14 @@ library(tidyverse)
 library(kableExtra)
 library(knitr)
 library(ggpubr)
+library(flextable)
 
 ```
 ## Single case (N-of-1) designs
 
 The single case design, also known as N-of-1 trial, or small N design, is a commonly used intervention design in clinical psychology and neuropsychology, including aphasia therapy [@perdices2009]. The N-of-1 trial may be regarded as an extreme version of a _within-subjects_ design, where comparisons are made between conditions within a single person. Very often, a set of N-of-1 trials is combined into a *case series* (see below). It is important to note that an N-of-1 trial is not a simple case report, but rather a study that is designed and analysed in a way that controls as far as possible for the kind of unwanted influences on results described in chapters 2-5. 
 
-Table \@ref(tab:n-of-1-logic) shows the contrast in logic between the standard RCT and N-of-1 designs.
+Table \@ref(tab:scdlogic) shows the contrast in logic between the standard RCT and N-of-1 designs.
 
 ```{r n-of-1-logic,echo=F,include=T,tab.caption= "How intervention vs control is allocated in different study designs"}
 Design <- c('RCT','N-of-1: ABA','N-of-1: Multiple baseline across behaviours')
@@ -25,7 +26,7 @@ ftable
 
 ```
 
-The first row of Table \@ref(tab:n-of-1-logic) shows the design for a simple 2-arm RCT, where intervention is varied between subjects who are assessed on the same occasion and on the same outcome. The second row shows a version of the N-of-1 design where the invention is varied in a single subject at different time points. The third row shows the case where intervention is assessed by comparing different outcomes in the same subject on the same occasion - this is referred to by @krasny-pacini2018 as a multiple baseline design across behaviours. In practice, aspects of these designs can be combined - e.g. the cross-over design that we saw in Chapter /@ref(crossover) compares an intervention across two time points and two groups of subjects. 
+The first row of Table \@ref(tab:scdlogic) shows the design for a simple 2-arm RCT, where intervention is varied between subjects who are assessed on the same occasion and on the same outcome. The second row shows a version of the N-of-1 design where the invention is varied in a single subject at different time points. The third row shows the case where intervention is assessed by comparing different outcomes in the same subject on the same occasion - this is referred to by @krasny-pacini2018 as a multiple baseline design across behaviours. In practice, aspects of these designs can be combined - e.g. the cross-over design that we saw in Chapter \@ref(crossover) compares an intervention across two time points and two groups of subjects. 
 
 Whatever design is used, the key requirements are 
 
@@ -104,7 +105,7 @@ https://reader.elsevier.com/reader/sd/pii/B9780080440736500171?token=40204477531
 
 ### Statistical approaches to N-of-1 designs
 
-Early reports of N-of-1 studies often focused on simple visualisation of results. This can be fine provided that differences are very obvious, as in Figure 1 above. We can think back to our discussion of analysis methods for RCTs: the aim is always to ask whether the variation associated with differences in intervention is greater than the variation within the intervention condition. In Figure 1, there is very little overlap in the values for the intervention vs non-intervention periods, and statistics are unnecessary.  However, we can simulate a more ambiguous result, simply by increasing the variation within both time periods. Figure x2 is the same as Figure x1, except that the measures are five times more variable, so the signal of the intervention is harder to see. For data such as this, we might want to support our impression of a true effect with a statistical test. The null hypothesis in this case would be that there is no difference between the four time intervals. 
+Early reports of N-of-1 studies often focused on simple visualisation of results. This can be fine provided that differences are very obvious, as in Figure 1 above. We can think back to our discussion of analysis methods for RCTs: the aim is always to ask whether the variation associated with differences in intervention is greater than the variation within the intervention condition. In Figure \@ref(fig:SingleCaseDplot) there is very little overlap in the values for the intervention vs non-intervention periods, and statistics are unnecessary.  However, we can simulate a more ambiguous result, simply by increasing the variation within both time periods. Figure \@ref(fig:SingleCaseDplot2) is the same as Figure \@ref(fig:SingleCaseDplot), except that the measures are five times more variable, so the signal of the intervention is harder to see. For data such as this, we might want to support our impression of a true effect with a statistical test. The null hypothesis in this case would be that there is no difference between the four time intervals. 
 
 Some early N-of-1 studies in neuropsychology may have drawn over-optimistic conclusions from N-of-1 studies because they had insufficient replications of outcome measures, assuming that the observed result was a valid indication of outcome without taking into account error of measurement. The more measurements we have in this type of study, the more confidence we can place in results: whereas in RCTs we need sufficient participants to get a sense of how much variation there is in outcomes, in N-of-1 studies we need sufficient observations, and should never rely just on one or two instances. 
 
@@ -113,7 +114,7 @@ Just as with group studies, we also have the issue of how to interpret null resu
 
 ```{r SingleCaseDplot2, echo=F, message=F, warning=F, fig.width=8,fig.height=4, fig.cap="plot showing a single case design RCT (N=2)"}
 #simulate some data based on a known structure
-library(tidyverse)
+
 set.seed(1981)
 true_fct = stepfun(c(100, 200, 300), c(200, 250, 200, 250))
 
@@ -128,17 +129,21 @@ ggplot(data=TSdata,aes(Time, y1)) + geom_vline(xintercept = c(0,100,200,300,400)
 
 ```
 
-<!---I think it would be v useful to do a bit more on this!
+<!---PAUL: I think it would be v useful to do a bit more on this.
 The paper by Leniston and Ebbels used Linear Mixed Models - Susan Ebbels said she is learning R and was not confident about it, but it seemed a plausible approach that might be preferable to the rather hodgepodgey set of things that are currently done. Your thoughts on  her methods would be v useful!-->
 
-Statistical analysis tends to focus on: i) visual assessment by plot the sequential series of observed data and highlighting on-off periods of intervention; ii) Time series analysis [@Chatfield_2004], or iii) simple and commonly-used inferential statistics tests [@Tate_2016].
+Statistical analysis tends to focus on: i) visual assessment by plot the sequential series of observed data and highlighting on-off periods of intervention; ii) Time series analysis [@chatfield2004], or iii) simple and commonly-used inferential statistics tests [@tate2016].
 
 
 
 
-When a single case design won't work [@Senn_2004] <!--omit this? - Senn always makes a lot of sense, but is entirely focused on drug trials and ABA approach, and I think the issues are different in behavioural interventions-->
+When a single case design won't work [@senn2004] 
+<!--omit this? - Senn always makes a lot of sense, but is entirely focused on drug trials and ABA approach, and I think the issues are different in behavioural interventions-->
 
 
 <!--The CENT reporting guidelines [67], [68] are intended for medical N-of-1 trials, the SCRIBE 2016 guidelines [22], [51] are intended for SCEDs in the behavioral sciences
 Paul: I was disappointed that the SCRIBE guidelines didn't say anything about data analysis, which I think is pretty important!--> 
 
+## CLASS EXERCISE
+
+xxx
