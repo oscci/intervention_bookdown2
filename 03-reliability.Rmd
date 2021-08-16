@@ -50,7 +50,7 @@ knitr::include_graphics('images/targets.jpg')
 ```
 
 
-<!-- DB comment.copyright status?: there are multiple versions of this type of thing online, but it's hard to know who first came up with the idea. -->
+<!-- DB comment.copyright status?: there are multiple versions of this type of thing online, but it's hard to know who first came up with the idea. There's a nice big version in Poldrack's book that we could use-->
 
 You may be surprised to see reliability at the top of the list. Surely validity is more important? Well, yes and no. As shown in Figure \@ref(fig:darts), there's not much point in having a measure that is valid unless it is also reliable: what we want is a measure that hits the bullseye, in terms of measuring what we are aiming to measure, not just on average, but consistently. A measure that is valid but not reliable is worse than useless in an intervention study, so we put reliability at the top of the list.
 
