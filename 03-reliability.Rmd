@@ -8,6 +8,7 @@ library(MASS)
 library(kableExtra)
 library(knitr)
 library(flextable)
+library(cowplot)
 
 
 ```
@@ -199,15 +200,85 @@ Z-scores, however, have some unfortunate characteristics: they involve both posi
 
 As if this was not complicated enough, the scaled score can also be directly translated into a percentile (or centile) score, which corresponds to the percentage of people in the population who are expected to obtain a score at least as high as this. This conversion is usually based on the normal distribution, where there is an orderly relationship between percentiles and the z-score. As shown in Figure xx, approximately 16% of people are expected to score 1 SD below the mean, and 3% score 2 SD below the mean.   
 
-People may wonder why bother with scaled scores, given that percentiles have a more intuitive interpretation.  Percentiles are good for communicating how exceptional a given raw score is, but they are not so good for doing statistical analyses. For those interested in understanding why, this blogpost gives a short explanation: http://deevybee.blogspot.com/2011/04/short-nerdy-post-about-use-of.html.
+People may wonder why bother with scaled scores, given that percentiles have a more intuitive interpretation.  Percentiles are good for communicating how exceptional a given raw score is, but they are not so good for doing statistical analyses. For those interested in understanding why, [this blogpost](http://deevybee.blogspot.com/2011/04/short-nerdy-post-about-use-of.html) gives a short explanation:
 </code></p> 
-<!-- I plan to upload all the blogposts that I cite here to figshare so they can have a doi-->
+<!-- I plan to upload all the blogposts that I cite here to figshare - or possibly somewhere else?-  so they can have a doi-->
+
+
+```{r zDensityCDF,echo=FALSE,fig.cap="Distribution of z-scores, showing proportions of people obtaining scores below -1, between -1 and 1, and above 1.",fig.width=6,fig.height=3}
+# This is modified from Poldrack online book Stats for 21st century
+# First, create a function to generate plots of the density and CDF
+dnormfun <- function(x) {
+  return(dnorm(x, 248))
+}
+plot_density <- 
+  function(zcut, zmin = -4, zmax = 4,  zmean = 0, zsd = 1) {
+    zmin <- zmin * zsd + zmean
+    zmax <- zmax * zsd + zmean
+    x <- seq(zmin, zmax, 0.1 * zsd)
+    zdist <- dnorm(x, mean = zmean, sd = zsd)
+    area <- pnorm(zcut) - pnorm(-zcut)
+    
+    p2 <- 
+      tibble(
+        zdist = zdist, 
+        x = x
+      ) %>% 
+      ggplot(aes(x, zdist)) +
+      geom_line(
+        aes(x, zdist), 
+        color = "grey", 
+        size = 2
+      ) +
+      stat_function(
+        fun = dnorm, args = list(mean = zmean, sd = zsd),
+        xlim = c(zmean - zcut * zsd, zmean + zsd * zcut),
+        geom = "area", fill = "yellow"
+      ) +
+      stat_function(
+        fun = dnorm, args = list(mean = zmean, sd = zsd),
+        xlim = c(zmin, zmean - zcut * zsd),
+        geom = "area", fill = "lightblue"
+      ) +
+      stat_function(
+        fun = dnorm, args = list(mean = zmean, sd = zsd),
+        xlim = c(zmean + zcut * zsd, zmax),
+        geom = "area", fill = "lightblue"
+      ) +
+      annotate(
+        "text",
+        x = zmean,
+        y = .05,
+        label = sprintf("%0.1f%%", area * 100)
+      ) +
+      annotate(
+        "text",
+        x = zmean - zsd * zcut - 0.5 * zsd,
+        y = .05,
+        label = sprintf("%0.1f%%", pnorm(zmean - zsd * zcut, mean = zmean, sd = zsd) * 100)
+      ) +
+      annotate(
+        "text",
+        x = zmean + zsd * zcut + 0.5 * zsd,
+        y = .05,
+        label = sprintf("%0.1f%%", (1 - pnorm(zmean + zsd * zcut, mean = zmean, sd = zsd)) * 100)
+      ) +
+      xlim(zmin, zmax) +
+      labs(
+        x = "z-score",
+        y = "Density"
+      )
+  }     
+p2 <- plot_density(zcut=1)
+print(p2)
+
+```
 
 ```{r, fig.align="center", echo=FALSE}
 knitr::include_graphics("images/paleblueline.png")
 ```
-NEED A FIG SHOWING NORMAL DISTRIBUTION IN RELATION TO PERCENTILES ETC
-
+  
+   
 So what should we be looking for in terms of test norms? As with other aspects of test criteria, it will depend what you want to do with a measure. As explained in the next section, in the context of intervention studies, use of scaled scores may be non-optimal because there is a loss of sensitivity. The main benefit of using scaled scores is that they provide a way of indicating how exceptional a raw score is, regardless of age. So, for example, if you were aiming to move a child's vocabulary from below average to the normal range, you could tell from a z-score if you achieved that goal, whereas a raw score would not be informative.  
 
 If one is going to use scaled scores, it is important to consult the test manual to check that an appropriate standardization sample was used. To give an example, the Test of Word Reading Efficiency [@torgesen1999] is widely used as a quick measure of word reading accuracy. However, the norms are representative of children in the USA, where reading instruction does not start until 6 years of age. This makes it unsuitable for 6-year-olds in the UK, who are introduced to reading at 4 years of age. It is seldom possible to find a test that is standardized on a population that is a perfect match for a study sample, and so some compromises must be made; the important point is that when selecting an instrument, one should check out standardization information in the test manual and be aware that a measure might give biased scaled scores if there are systematic differences between the demographics of the normative sample and a study sample. A related concern is when a test's norms are based on samples that are either very small, or selected by convenience rather than intended to be representative of the population, or where scaled scores are derived by a z-score formula based on underlying distributions that are skewed (e.g. when there are ceiling effects).
