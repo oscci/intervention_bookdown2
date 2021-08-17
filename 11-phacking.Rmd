@@ -20,10 +20,10 @@ library(flextable)
 
 ```
 
-Let us look again at the table of possible outcomes that can arise if we use p-values to decide if a result is statistically significant or not, shown here as \@ref(table:confusionMat2a). In this chapter, our focus will be on the top right hand corner - the False Positive. 
+Let us look again at the table of possible outcomes that can arise if we use p-values to decide if a result is statistically significant or not, shown here as \@ref(table:table2by2). In this chapter, our focus will be on the top right hand corner - the False Positive. 
 
   
-```{r confusionMat2a, echo=FALSE, message=FALSE, warnings=FALSE,results='asis',tab.cap="Possible outcomes of Null Hypothesis Statistical Test"}
+```{r table2by2, echo=FALSE, message=FALSE, warnings=FALSE,results='asis',tab.cap="Possible outcomes of Null Hypothesis Statistical Test"}
 options(kableExtra.html.bsTable = T)
 mymat<-matrix(NA,nrow=2,ncol=3)
 

@@ -23,7 +23,7 @@ The standard two-arm RCT treats the intervention effect as a _between-subjects_ 
 The crossover design, illustrated in Table \@ref(tab:crossovertab) is a special case of the RCT where both control and intervention groups receive both conditions but in reverse orders to each other. Here we focus on group studies: in the next chapter we look at the special case where a within-subjects approach is applied to a single person.  
 
 
-```{r crossovertab,echo=F,message=F,warning=F,tab.caption="Treatment Allocation Matrix"}
+```{r crossovertab,echo=F,message=F,warning=F,tab.cap="Treatment Allocation Matrix"}
 options(kableExtra.html.bsTable = T)
 #reference: "An introduction to randomized controlled clinical trials" by J.N.S. Matthews.
 
@@ -47,7 +47,7 @@ The benefit of the crossover design is that a potentially more accurate evaluati
 
 A crossover design is usually split into three phases, an initial phase where two groups are randomized (exactly the same as a parallel group design) to intervention and control [@sibbald1998]. Once the first phase has elapsed, the individuals enter a washout phase (phase 2); this is important to allow any intervention effect to be removed before the groups are switched and phase 3 is started. By the end of the study, both groups have received intervention. The assessment of the intervention looks at the differences between phases 1 and 3 by group. We hope to see no group difference but a significant phase difference.
 
-The suitability of a cross-over design, and the anticipated results, depend crucially on the nature of the intervention.  A key question is whether or not the intervention is intended to have long-term effects that persist beyond the intervention phase. For most behavioural interventions administered by speech-and-language therapists, and indeed for educational interventions, the goal is to bring about long-term change. Exceptions would be communication aids such as auditory feedback masking, which decreases stuttering while the masker is switched on, but does not produce long-term change [@block2014]. In this regard, most speech-and-language therapy interventions are unlike pharmaceutical trials, which often focus on the ability of specific drugs to provide symptomatic relief.
+The suitability of a cross-over design, and the anticipated results, depend crucially on the nature of the intervention.  A key question is whether or not the intervention is intended to have long-term effects that persist beyond the intervention phase. For most behavioural interventions administered by speech-and-language therapists, and indeed for educational interventions, the goal is to bring about long-term change. Exceptions would be communication aids such as auditory feedback masking, which decreases stuttering while the masker is switched on, but does not produce long-term change [@block1996]. In this regard, most speech-and-language therapy interventions are unlike pharmaceutical trials, which often focus on the ability of specific drugs to provide symptomatic relief.
 
 Interventions intended to have long-term effects are not well-suited for a traditional crossover design, because the magnitude of the effect size will be diluted in phase 3. 
 <!--- best way to analyse?-->
@@ -98,7 +98,7 @@ geom_segment(aes(x=2,y=6,xend = 2.5, yend = 4),col="red",linetype="dashed",size=
 
 The delayed crossover design or wait list control design is another type of _within subject_ design. The control group also receive the intervention, but after a pre-specified wait period. This design may encourage participation by clients and those referring them, as all participants have access to a potentially beneficial intervention and serve as their own controls. There is, however, some debate around usefulness of wait-list designs in the psychological and behavioural interventions literature [@elliott2002; @cunningham2013; @furukawa2014]. In particular, @cunningham2013 presented results that showed this design can potentially, artificially inflate intervention effect estimates. When a participant knows that they have to wait, psychologically this can induce different behaviour, described as a state of "resentful demoralisation", which can lead to poorer outcome - a kind of "nocebo" effect. Having said that, Cunningham et al noted that negative reactions to being on a wait list are likely to depend on the specific context. Studies showing "nocebo" effects have tended to focus on clinical psychology interventions, where distressed patients have been actively seeking help and may become disconsolate or irritated at having to wait.  
 
-It is possible to have a wait-list design that avoids nocebo effects, if a plausible active control is used. An example is provided by @varley2006, who used a self-administered computerised intervention with stroke patients who had apraxia of speech. The intervention group did training on speech production and perception for 6 weeks, whereas the active controls were given a sham intervention that involved visuospatial processing, and were told it was designed to improve their attention and memory. After the initial intervention period, there was a 4 week break, and then the two interventions were swapped over for another 6 weeks. The researchers noted, however, that this approach does involve some deception.  
+It is possible to have a wait-list design that avoids nocebo effects, if a plausible active control is used. An example is provided by @varley2016, who used a self-administered computerised intervention with stroke patients who had apraxia of speech. The intervention group did training on speech production and perception for 6 weeks, whereas the active controls were given a sham intervention that involved visuospatial processing, and were told it was designed to improve their attention and memory. After the initial intervention period, there was a 4 week break, and then the two interventions were swapped over for another 6 weeks. The researchers noted, however, that this approach does involve some deception.  
 
 
 <!---We definitely need to cover this, as it is not uncommon esp in educational contexts. 
@@ -106,7 +106,7 @@ But thinking about this, I'm not sure how it differs from regular crossover apar
 Also wonder about the analysis: I googled and someone said this, 
 "Have three timepoints for everyone, t0 at baseline, t1 when the control group switches to treatment, and t2 after about double that time. At t1 you have a between subject treatment comparison of treatment versus control adjusted for the t0 baseline covariate. You also have a within subject comparison within the control-treatment group. The right linear mixed model can combine those estimates under certain assumptions. And stronger assumptions can be made of course if blinding occurs and neither group knows who is on control or treatment to time t1." --> 
 
-```{r waitlist_plot, echo=F, message=F, warning=F, fig.width=8,fig.height=4, fig.cap="Plot showing a wait list design RCT"}
+```{r waitlist-plot, echo=F, message=F, warning=F, fig.width=8,fig.height=4, fig.cap="Plot showing a wait list design RCT"}
 
 
 
