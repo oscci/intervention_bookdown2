@@ -12,3 +12,10 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+h1 {color: slateblue;}
+h2 {color: slateblue;}
+h3 {color: slateblue;}
+h4 {text-align: center; background-color: slateblue;color: white}
+
+#custom {background-color: RGB(255,255,214);font-size: 14px;padding: 20px}
