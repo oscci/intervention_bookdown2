@@ -22,7 +22,9 @@ knitr::include_graphics("images/paleblueline.png")
 ```
 
 ## Registered Reports  
-Michael Mahoney, whose book was mentioned in Chapter \@ref(pubbias), provided an early demonstration of publication bias with his little study of journal reviewers [@mahoney1976]. Having found that reviewers are far too readily swayed by a paper's results, he recommended: _Manuscripts should be evaluated solely on the basis of their relevance and their methodology. Given that they ask an important question in an experimentally meaningful way, they should be published - regardless of their results._ (p. 105).
+Michael Mahoney, whose book was mentioned in Chapter \@ref(pubbias), provided an early demonstration of publication bias with his little study of journal reviewers [@mahoney1976]. Having found that reviewers are far too readily swayed by a paper's results, he recommended:  
+
+_Manuscripts should be evaluated solely on the basis of their relevance and their methodology. Given that they ask an important question in an experimentally meaningful way, they should be published - regardless of their results._ (p. 105).
 
 37 years later, Chris Chambers independently came to the same conclusion. In his editorial role at the journal Cortex, he introduced a new publishing initiative adopting this model, which was heralded by an [open letter in the Guardian newspaper](https://www.theguardian.com/science/blog/2013/jun/05/trust-in-science-study-pre-registration). The registered report is a specific type of journal article that embraces pre-registration as one element of the process; crucially, peer review occurs before data is collected.
 

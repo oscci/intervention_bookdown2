@@ -14,12 +14,12 @@ library(ggplot2)
 library(ggpubr)
 
 ```
-### Sampling   
+## Sampling   
 Consider the following scenario: You have two people who tried a weight loss program, Carbocut, which restricted carbohydrates, and who lost an average of 4 lb over 2 weeks. Another two people just tried sticking to three meals a day (Program 3M). They lost an average of 1 lb over 2 weeks. Would that convince you that carbohydrate restriction is superior?  What if we tell you that one person in the Carbocut group lost 6 lb and the other gained 2 lb; in the Program 3M group, one person lost 5 lb and one gained 3 lb. Few people would find this convincing evidence. With only two people per group, the average is quite unstable and highly dependent on the specific people in the group. Things would look  more promising if you had 1000 people in each group, and still saw a 4 lb loss vs a 2 lb loss.  Individual weights would fluctuate, but the average is a much better indication of what is typical when we have a larger sample, because individual people with extreme scores will have less impact.  
 
 How could we know the real truth of just how much weight loss is associated with each diet? In theory, there is a way we could find out - we could recruit every single person in the world who meets some selection criterion for inclusion in the study, and randomly assign them to one or the other diet, and then measure weight loss. Of course, in practice, that is neither possible, ethical nor sensible. Rather, the aim of research is to test a group of people whose results can be generalised to the broader population. So we recruit a sample which is intended to represent that much larger population. As the  example above demonstrates, we need to think about sample size, as this will affect how much confidence we can place in the estimates from the sample. We know that two people is too small a sample. 1000 seems much better but, outside medical trials, is often too expensive and difficult to achieve. So how do we decide the optimal sample?  To answer that question, we first need to introduce the concept of **effect size**.  
 
-### Effect size
+## Effect size
 
 Another way of thinking about our first example is that it illustrates that we can't interpret an average difference between two groups unless we know something about the variation within each group. In the example where we have only two people per group, the variation _within_ each group (8 lb difference between highest and lowest) is far greater than the variation _between_ groups (2 lb). 
 
@@ -84,7 +84,7 @@ There are various ways of measuring effect size: a simple measure is Cohen's _d_
 knitr::include_graphics('images/Effectsizes_fig.jpg')
 ```
 
-### Sample size affects accuracy of estimates  
+## Sample size affects accuracy of estimates  
 
 Once we have an idea of the likely effect size in our study, we can estimate how big a sample we need. If we have a small effect size, then we need many observations to get a reliable estimate of the true effect of intervention. Figure \@ref(fig:varES) resembles Figure \@ref(fig:effsizefig), but there is an important difference: in  Figure \@ref(fig:varES), each blob represents the _observed mean_ from a sample of a given size, taken from a population where the true effect size, shown as a dotted horizontal line, is 0.3. 
 
@@ -144,13 +144,13 @@ knitr::include_graphics('images/bees_ES0.3_Nall.jpg')
 
 Notice how the observed means jump around from sample to sample when sample size is small, but become more stable once we have 80 or more participants per group.  When there are 320 participants per group, the mean of each group is estimated very accurately, but with 10 per group, it is very unreliable, and in some of our studies the mean of the blue group is lower than the mean of the pink group, which is opposite to what is true in the population. 
 
-### Understanding p-values
+## Understanding p-values
 
 When we do an intervention study we want to find out whether a given intervention works. The examples above show that it is not enough just to show that the mean outcome for an intervention group is better than for a control group. We need to take the variation around the means into account. 
 
-Most studies use an approach known as Null Hypothesis Significance Testing, which gives us a rather roundabout answer to the question.  Typically, findings are evaluated in terms of p-values, which tell us _what is the probability (p) that our result could have arisen by chance_. The lower the p-value, the less likely it is that our result would have occurred if there is no real intervention effect. 
+Most studies use an approach known as Null Hypothesis Significance Testing, which gives us a rather roundabout answer to the question.  Typically, findings are evaluated in terms of p-values, which tell us _what is the probability (p) that our result, or a more extreme one, could have arisen by chance_. The lower the p-value, the less likely it is that our result would have occurred if there is no real intervention effect. The way the p-values is calculated assumes certain things hold true about the nature of the data ("model assumptions"): we will say more about this later on, and show how it is important to test assumptions when applying statistical tests, to avoid getting misleading results. 
 
-P-values are very often misunderstood, and there are plenty of instances of wrong definitions being given even in textbooks. The p-value is _the probability of the observed data, if the null hypothesis is true_.  It does _not_ tell us the probability of the null hypothesis being true. And it tells us nothing about the alternative hypothesis, i.e., that the intervention works. 
+P-values are very often misunderstood, and there are plenty of instances of wrong definitions being given even in textbooks. The p-value is _the probability of the observed data or more extreme data, if the null hypothesis is true_.  It does _not_ tell us the probability of the null hypothesis being true. And it tells us nothing about the alternative hypothesis, i.e., that the intervention works. 
 
 An analogy might help here. Suppose you are a jet-setting traveller and you wake up one morning confused about where you are. You wonder if you are in Rio de Janiero - think of that as the null hypothesis. You look out of the window and it is snowing. You decide that it is very unlikely that you are in Rio. You reject the null hypothesis. But it's not clear where you are.  Of course, if you knew for sure that you were either in Reykjavík or Rio, then you could be pretty sure you were in Reykjavík. But suppose it was *not* snowing. This would not leave you much the wiser.  
 
@@ -158,22 +158,13 @@ A mistake often made when interpreting p-values is that people think it tells us
 
 A low p-value allows us to reject the null hypothesis with a certain degree of confidence, but this does no more than indicate "something is probably going on here - it's not just random" - or, in the analogy above, "I'm probably not in Rio". 
 
-```{r, fig.align="center", echo=FALSE}
-knitr::include_graphics("images/paleblueline.png")
-``` 
 
 #### Criticisms of the use of p-values {-}
+<div id="custom">There are many criticisms of the use of p-values in science, and a good case can be made for using alternative approaches, notably methods based on Bayes theorem. Our focus here is on Null Hypothesis Significance Testing purely because such a high proportion of studies in the literature use this approach, and it is important to understand p-values in order to evaluate the literature. 
 
-<p style="font-family: Times;font-size: 14px"><code>There are many criticisms of the use of p-values in science, and a good case can be made for using alternative approaches, notably methods based on Bayes theorem. Our focus here is on Null Hypothesis Significance Testing purely because such a high proportion of studies in the literature use this approach, and it is important to understand p-values in order to evaluate the literature. </code>
-
-<code>One good reason for objecting to the use of p-values is that they are typically used to make a binary decision: we either accept or reject the null hypothesis, depending on whether the p-value is less than a certain value. In practice, evidence is graded, and it can be more meaningful to express results in terms of the amount of confidence in alternative interpretations, rather than as a single accept/reject cutoff.
+One good reason for objecting to the use of p-values is that they are typically used to make a binary decision: we either accept or reject the null hypothesis, depending on whether the p-value is less than a certain value. In practice, evidence is graded, and it can be more meaningful to express results in terms of the amount of confidence in alternative interpretations, rather than as a single accept/reject cutoff.
 <!---links to good intros to Bayes?-->
-</code></p>
-
-```{r, fig.align="center", echo=FALSE}
-knitr::include_graphics("images/paleblueline.png")
-```
-
+</div>
 
 In practice, p-values are typically used to divide results into "statistically significant" or "non-significant", depending on whether the p-value is low enough to reject the null hypothesis. We do not defend this practice, which can lead to an all-consuming focus on whether p-values are above or below a cutoff, rather than considering effect sizes and strength of evidence. However, it is important to appreciate how the cutoff approach leads to experimental results falling into 4 possible categories, as shown in Table \@ref(table:confusionMat). 
 
@@ -318,29 +309,20 @@ If you are finding this all quite confusing, don't worry. This is complicated an
 It is therefore important to think about power when designing a study, or you may end up concluding an intervention is ineffective, when in fact it has a small effect that your study is underpowered to detect.  
 
 
-```{r, fig.align="center", echo=FALSE}
-knitr::include_graphics("images/paleblueline.png")
-``` 
-
 #### Standard error of the mean {-}
-
-<p style="font-family: Times;font-size: 14px"><code>It can be challenging to get an intuitive understanding of power, because the computations needed to calculate it are not straightforward. A key statistic is the standard error of the mean, also known as the SEM, usually shortened to standard error (SE). This can be thought of as an index of the variability of an estimate of the mean from a sample. If you imagine taking numerous samples from a population, and estimating the mean from each one, you will end up with a distribution of means, similar to those shown in Figure \@ref(fig:varES). As shown in that Figure, these estimates of the mean are much more variable for small than for large samples.  The SE is the standard deviation of the estimates of the mean, and it is crucially dependent on the sample size. 
+<div id="custom">It can be challenging to get an intuitive understanding of power, because the computations needed to calculate it are not straightforward. A key statistic is the standard error of the mean, also known as the SEM, usually shortened to standard error (SE). This can be thought of as an index of the variability of an estimate of the mean from a sample. If you imagine taking numerous samples from a population, and estimating the mean from each one, you will end up with a distribution of means, similar to those shown in Figure \@ref(fig:varES). As shown in that Figure, these estimates of the mean are much more variable for small than for large samples.  The SE is the standard deviation of the estimates of the mean, and it is crucially dependent on the sample size. 
 This follows form the formula for the SE, which is computed as the SD divided by the square root of N. 
 
 The test statistic, _z_ in this instance, which is used to derive a p-value, uses the SE as a denominator, and so will also be influenced by sample size. The _z_ score is defined as:  
   
 z = (M - $\mu$)/SE  
 
-The bigger the N, the smaller the SE, the more precise the measurement, and the higher the power of the statistical test. Note that the value entered into these equations is the _square root_ of N. It follows that improvement in precision from adding extra participants to a study is greatest at small sample sizes: as shown in the figure below, the SE is approximately halved in increasing the sample size from 10 to 40, whereas changes are much smaller in going from 110 to 140 participants. </code></p>  
+The bigger the N, the smaller the SE, the more precise the measurement, and the higher the power of the statistical test. Note that the value entered into these equations is the _square root_ of N. It follows that improvement in precision from adding extra participants to a study is greatest at small sample sizes: as shown in the figure below, the SE is approximately halved in increasing the sample size from 10 to 40, whereas changes are much smaller in going from 110 to 140 participants. </div>  
 
 ```{r demoSE, echo=F, include=T} 
 myseq <- seq(10,200,10)
 plot(myseq,1/sqrt(myseq),type='b',ylab='SE',xlab='N')
 
-```
-
-```{r, fig.align="center", echo=FALSE}
-knitr::include_graphics("images/paleblueline.png")
 ```
 
 
@@ -358,7 +340,7 @@ Researchers are often shocked when they first do a power analysis, to find that 
 - It is worth consulting with a statistician about the optimal research design. A RCT with comparison of intervention and controls groups is not the only possible approach. Some designs are more efficient than others for showing effects of interest: see especially Chapter \@ref(crossover) and Chapter \@ref(singlecase).  
 
 
-## CLASS EXERCISES  
+## Class Exercises 
 The teaching of statistics is being transformed by the internet. There are some excellent interactive websites to help you gain a more intuitive sense of some of the statistical concepts in this chapter. For starters, we'd recommend [this website](https://www.zoology.ubc.ca/~whitlock/Kingfisher/SamplingNormal.htm) which focuses on sampling from a normally distributed population. You can vary the mean and standard deviation, as well as the sample size. The examples are from zoology, but the ideas apply much more broadly.  This is just one of [several apps in a set](https://whitlockschluter.zoology.ubc.ca/stats-visualizations) that is designed to help understand statistics.
 
 

@@ -171,19 +171,11 @@ ft2
 Table \@ref(tab:ancova-compare) shows the same data analysed by first of all by using ANOVA to compare only the post-test scores (upper chart) and then using ANCOVA to adjust scores for the baseline (pretest) values. The effect size is shown as ges, which stands for "generalised eta squared". You can see there is a large ges value, and correspondingly low p-value for the pretest term, reflecting the strong correlation between pretest and posttest shown in Figure \@ref(fig:ds-prepost). In effect, with ANCOVA, we adjust scores to remove the effect of the pretest on the posttest scores; in this case, we can then see a slightly stronger effect of the intervention: the effect size for the group term is higher and the p-value is lower than with the previous ANOVA. 
 
 
-```{r, fig.align="center", echo=FALSE}
-knitr::include_graphics("images/paleblueline.png")
-``` 
-
 #### T-tests, analysis of variance, and linear regression  {-}
 
-<p style="font-family: Times;font-size: 14px"><code>Mathematically, the t-test is equivalent to two other methods: analysis of variance and linear regression. When we have just two groups, all of these methods achieve the same thing: they divide up the variance in the data into variance associated with group identity, and other (residual) variance, and provide a statistic that reflects the ratio between these two sources of variance. This is illustrated with the real data analysed in Table \@ref(tab:ancova-compare). The upper analysis gives results that are equivalent to the t-test in Table \@ref(tab:ttestoutcomes): if you square the t-value it is the same as the F-test. In this case, the p-value from the t-test is half the value of that in the ANOVA: this is because we specified a one-tailed test for the t-test. The p-value would be identical to that from ANOVA if a two-tailed t-test had been used.  
+<div id="custom">Mathematically, the t-test is equivalent to two other methods: analysis of variance and linear regression. When we have just two groups, all of these methods achieve the same thing: they divide up the variance in the data into variance associated with group identity, and other (residual) variance, and provide a statistic that reflects the ratio between these two sources of variance. This is illustrated with the real data analysed in Table \@ref(tab:ancova-compare). The upper analysis gives results that are equivalent to the t-test in Table \@ref(tab:ttestoutcomes): if you square the t-value it is the same as the F-test. In this case, the p-value from the t-test is half the value of that in the ANOVA: this is because we specified a one-tailed test for the t-test. The p-value would be identical to that from ANOVA if a two-tailed t-test had been used.  
 See [this blogpost](http://deevybee.blogspot.com/2017/11/anova-t-tests-and-regression-different.html) for more details.
-<!-- reminder to self: blogposts referenced in the book should be uploaded to figshare or another place with DOI--></code></p>
-
-```{r, fig.align="center", echo=FALSE}
-knitr::include_graphics("images/paleblueline.png")
-```
+<!-- reminder to self: blogposts referenced in the book should be uploaded to figshare or another place with DOI--></div>
 
 
 

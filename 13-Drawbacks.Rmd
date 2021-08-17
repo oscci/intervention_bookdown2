@@ -143,7 +143,7 @@ It should be noted, however, that some people are sceptical about the value of b
 
 What does any of this have to do with the behavioural interventions used by allied health professionals? We should start by saying that we are dubious that the study of biomarkers will be of help in predicting response to intervention in individuals with speech and language disorders. There is a substantial research literature studying genetic and neurobiological bases of these conditions, but attempts to link this work to intervention have been plagued by methodological problems [@bishop2013a]. A much stronger argument can be made, however, that there are individual differences between people that are likely to affect how they respond to intervention, and hence we need to develop interventions that are tailored to the individual's speech, language and communication problems. Indeed, most speech and language therapists would argue that this is exactly what they aim to do. Insofar as this is the case, it follows that the traditional RCT has limited applicability to this field. This does not mean, however, that we should abandon attempts to evaluate interventions, and simply ignore potential sources of bias. Alternative approaches that are more compatible with a "precision" approach to speech and language therapy are covered in Chapter \@ref(singlecase). 
 
-## CLASS EXERCISE  
+## Class exercise
 
 Pick a RCT on a topic of interest to you from the literature - this can be the same as for previous exercises if you wish. Consider the question (modified from one asked by @treweek2009):  
 >How likely is it that this treatment (apparently successful in this trial or review) will achieve important benefits in my context, administered by me to my patients? 

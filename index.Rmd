@@ -9,11 +9,10 @@ biblio-style: apalike
 link-citations: yes
 description: "Introduction to methods for evaluating effectiveness of non-medical interventions"
 
-h4 {text-align: center;}
+
 
 ---
 
-<!---h4 command above is attempt to get the custom chunks to have centred headings, but it did not work.-->
 
 # Preface {-}
 

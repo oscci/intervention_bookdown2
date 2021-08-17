@@ -18,4 +18,10 @@ h2 {color: slateblue;}
 h3 {color: slateblue;}
 h4 {text-align: center; background-color: slateblue;color: white}
 
+/* https://www.w3schools.com/css/default.asp for tutorial on css */
 #custom {background-color: RGB(255,255,214);font-size: 14px;padding: 20px}
+
+#vignette {background-color: RGB(240,240,240);font-size: 14px;padding: 35px}
+
+#custom1 {background-color: RGB(255,255,214);font-size: 14px;padding: 20px}
+/* for some reason custom doesn't work in ch 10! */

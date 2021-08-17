@@ -303,7 +303,7 @@ ft
 Values in the body of Table \@ref(tab:minN) indicate the minimum number of outcomes that would need to be significant at the .05 level to retain a 1 in 20 false positive rate for various scenarios. For instance, with six outcome measures (N6) that had an average intercorrelation of .4, then if two or more of them gave a significant intervention effect at p < .05, this would be sufficient evidence to reject the null hypothesis. The more outcomes are considered, the greater the number that would be required to be significant in order to reject the null hypothesis using the significance criterion of .05.  
 
 
-## CLASS EXERCISE  
+## Class exercise 
 
 This [web-based app](https://www.shinyapps.org/apps/p-hacker/) by @schonbrodt2016 allows you to see how easy it can be to get a "significant" result by using flexible analyses. The term DV refers to "dependent variable", i.e. an outcome measure.  
 - Set the True Effect slider to its default position of zero, which means that the Null Hypothesis is true - there is no true effect.  

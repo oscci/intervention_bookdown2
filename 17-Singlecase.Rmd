@@ -144,6 +144,7 @@ When a single case design won't work [@senn2004]
 <!--The CENT reporting guidelines [67], [68] are intended for medical N-of-1 trials, the SCRIBE 2016 guidelines [22], [51] are intended for SCEDs in the behavioral sciences
 Paul: I was disappointed that the SCRIBE guidelines didn't say anything about data analysis, which I think is pretty important!--> 
 
-## CLASS EXERCISE
+## Class exercise
 
-xxx
+# Chapter should end here!!! {-}
+<!-- added the above header because otherwise ch 18 gets bolted on!!-->
