@@ -12,11 +12,12 @@ pre {
 pre code {
   white-space: inherit;
 }
+/*colour is set to match logo */
 
-h1 {color: slateblue;}
-h2 {color: slateblue;}
-h3 {color: slateblue;}
-h4 {text-align: center; background-color: slateblue;color: white}
+h1 {color: RGB(96,114,200);}
+h2 {color: RGB(96,114,200);}
+h3 {color: RGB(96,114,200);}
+h4 {text-align: center; background-color: RGB(96,114,200); color: white}
 
 /* https://www.w3schools.com/css/default.asp for tutorial on css */
 #custom {background-color: RGB(255,255,214);font-size: 14px;padding: 20px}

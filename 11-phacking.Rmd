@@ -136,6 +136,7 @@ colnames(resultsdf) <-c('run','corr',paste0('V',1:maxn),paste0('minp',mynvar) )
 summarydf <- data.frame(matrix(NA,nrow=length(mycorr),ncol=1+length(mynvar)))
 colnames(summarydf) <-c('corr',paste0('N',mynvar) )    
 thisrow <- 0
+ES <- 0 #effect size; if positive then can use simulation to check power
 for (s in 1:nsim){
   for (c in mycorr){
     thisrow <- thisrow+1
@@ -144,7 +145,7 @@ for (s in 1:nsim){
       mysigma<-matrix(c,nrow=maxn,ncol=maxn)
       diag(mysigma)<-1
       A <- mvrnorm(n=100,mu=rep(0,maxn),Sigma=mysigma)
-      B <- mvrnorm(n=100,mu=rep(0,maxn),Sigma=mysigma)
+      B <- mvrnorm(n=100,mu=rep(ES,maxn),Sigma=mysigma)
            for (v in 1:maxn) {
              tempt <- t.test(A[,v],B[,v])
              resultsdf[thisrow,(v+2)]<-tempt$p.value
@@ -225,7 +226,7 @@ if(skipsim ==1){
 resultsdf <- read.csv('data/rawsims_corr_vars_10000runs_plus.csv')
 }
 
-#The next chunk is very slow - about 30 mins - to run. The results file with the columns added from this step is now save ond drive, and can therefore be read in (has _plus suffix). 
+#The next chunk is very slow - about 30 mins - to run. The results file with the columns added from this step is now saved on drive, and can therefore be read in (has _plus suffix). 
 #For skipsim 2, we just go directly to saved summary files for quicker build
 if (skipsim<2){
 #We will add columns to create for each N a ranked list of pvalues. 

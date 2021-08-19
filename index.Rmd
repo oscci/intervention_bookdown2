@@ -1,6 +1,6 @@
 --- 
-title: "Evaluating and conducting intervention studies in allied health professions"
-author: "Dorothy V.M. Bishop and Paul A. Thompson"
+title: "Evaluating what works"
+author: "Dorothy V M Bishop and Paul A Thompson"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -9,12 +9,17 @@ biblio-style: apalike
 link-citations: yes
 description: "Introduction to methods for evaluating effectiveness of non-medical interventions"
 
-
-
 ---
 
 
 # Preface {-}
+<!---- for include_image you need bookdownplus package-->
+\vspace{0.1in}
+
+<center>
+`r include_image("images/cover_logo.png")`
+</center>
+\vspace{0.1in}
 
 ## Why did we write this book? {-}
 
