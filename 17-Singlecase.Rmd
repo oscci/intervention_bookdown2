@@ -10,12 +10,14 @@ library(flextable)
 ```
 ## Single case (N-of-1) designs
 
+<!---see https://arxiv.org/abs/1403.4309-->
+
 The single case design, also known as N-of-1 trial, or small N design, is a commonly used intervention design in clinical psychology and neuropsychology, including aphasia therapy [@perdices2009]. The N-of-1 trial may be regarded as an extreme version of a _within-subjects_ design, where comparisons are made between conditions within a single person. Very often, a set of N-of-1 trials is combined into a *case series* (see below). It is important to note that an N-of-1 trial is not a simple case report, but rather a study that is designed and analysed in a way that controls as far as possible for the kind of unwanted influences on results described in chapters 2-5. 
 
 Table \@ref(tab:scdlogic) shows the contrast in logic between the standard RCT and N-of-1 designs.
 
 ```{r scdlogic,echo=F,include=T,tab.cap= "How intervention vs control is allocated in different study designs"}
-Design <- c('RCT','N-of-1: ABA','N-of-1: Multiple baseline across behaviours')
+Design <- c('RCT','N-of-1: Treatment reversal','N-of-1: Parallel treatment')
 Participants <- c('+','-','-')
 Time <- c('-','+','-')
 Outcome <- c('-','-','+')
@@ -26,7 +28,7 @@ ftable
 
 ```
 
-The first row of Table \@ref(tab:scdlogic) shows the design for a simple 2-arm RCT, where intervention is varied between subjects who are assessed on the same occasion and on the same outcome. The second row shows a version of the N-of-1 design where the invention is varied in a single subject at different time points. The third row shows the case where intervention is assessed by comparing different outcomes in the same subject on the same occasion - this is referred to by @krasny-pacini2018 as a multiple baseline design across behaviours. In practice, aspects of these designs can be combined - e.g. the cross-over design by @varley2016 that we described in Chapter \@ref(crossover) compared an intervention across two time points and two groups of participants, and also compared naming performance on three sets of items: trained words, untrained words that were phonemically similar to the trained words, and untrained words that were dissimilar to the trained words. Furthermore, baseline measures were taken in both groups to check the stability of naming responses. That study was not, however, analysed as an SCD design: rather the focus was on average outcomes without analysing individual differences.  
+The first row of Table \@ref(tab:scdlogic) shows the design for a simple 2-arm RCT, where intervention is varied between subjects who are assessed on the same occasion and on the same outcome. The second row shows a version of the N-of-1 design where the invention is varied in a single subject at different time points. The third row shows the case where intervention is assessed by comparing treated vs untreated outcomes in the same subject on the same occasion - this is referred to by @krasny-pacini2018 as a multiple baseline design across behaviours and by @ledford2019 as an Adapted Alternating Treatment Design. In practice, aspects of these designs can be combined - e.g. the cross-over design by @varley2016 that we described in Chapter \@ref(crossover) compared an intervention across two time points and two groups of participants, and also compared naming performance on three sets of items: trained words, untrained words that were phonemically similar to the trained words, and untrained words that were dissimilar to the trained words. Furthermore, baseline measures were taken in both groups to check the stability of naming responses. That study was not, however, analysed as an SCD design: rather the focus was on average outcomes without analysing individual differences.  
 
 Whatever design is used, the key requirements are 
 
@@ -79,7 +81,43 @@ A huge benefit of the N-of-1 approach is that it can be incorporated in regular 
 
 @leniston2021 applied this approach to seven adolescents with severe speech disorders, all of whom were already familiar with electropalatography. Diagnoses included verbal dyspraxia, structural abnormalities of articulators (velopharyngeal insufficiency), mosaic Turner syndrome, and right-sided hemiplegia. At the start of each school term, two sounds were identified for each case: a target sound, which would be trained, and a control sound, which was also produced incorrectly, but which was not trained. Electropalatography training was administered twice a week in 30 minute sessions. The number of terms where intervention was given ranged from 1 to 3. 
 
-(figure here - to recreate fig 3 from raw data if available)
+```{r ebbelsfig,echo=F,include=F,warning=F,message=F,fig.leg = "Individual results for targets and controls at each term (Redrawn Fig 3 from Leniston & Ebbels, data kindly provided by Susan Ebbels)"}
+# Not clear if data should be open here - so option to skip once figure is done
+# output of this chunk is not included - we display the saved plot instead
+readebbels <-0
+if(readebbels==1){
+df <- read_csv("data/ebbelsdata.csv")
+#turn predictors into factors
+df$type <- factor(df$type)
+df$time <- factor (df$time)
+df$time <- relevel(df$time, "pre-intervention")
+df$ID <- factor(df$ID)
+df$Term <- factor(df$Term)
+df$SLT<-factor(df$SLT)
+levels(df$time)<-c("Pre","Post")
+levels(df$type)<-c("Control","Target")
+#individual plots
+plot<- ggplot(df, aes(x = time, y = score, group = type, linetype=type, colour=type)) +
+  geom_smooth(method = "lm", se = FALSE) +
+  geom_point(alpha = 0.8, size = 1) +
+  xlab("Intervention")+
+  ylab("% Correct")+
+  facet_grid (ID~Term) +
+  theme_bw() +
+  theme(axis.text.y = element_text(size=6))+
+  scale_linetype_manual( values=c("solid", "solid")) +
+  scale_colour_manual (values=c("grey", "blue"))
+
+
+plot
+ggsave("images/Ebbels.png", units="in", width=5, height=4, dpi=300)
+}
+
+
+```
+
+
+![Individual results for targets and controls at each term. Redrawn Fig 3 from Leniston & Ebbels, data kindly provided by Susan Ebbels](images/Ebbels.png)
 
 An analysis of group data found no main effect of target or time, but a large interaction between these, indicating greater improvement on trained speech sounds. The design of the study made it possible to look at individual cases, which gave greater insights into variation of the impact of intervention. In the first term of intervention, there was a main effect of time for three of the participants, but no interaction with sound type. In other words, these children improved over the course of the term, but this was seen for the control as well as the target sound. By term 2, one of four children showed an interaction between time and sound type, and both children who continued training into term 3 showed such an interaction. Three children did not show any convincing evidence of benefit - all of these stopped intervention after one term. 
 
@@ -105,7 +143,7 @@ https://reader.elsevier.com/reader/sd/pii/B9780080440736500171?token=40204477531
 
 ### Statistical approaches to N-of-1 designs
 
-Early reports of N-of-1 studies often focused on simple visualisation of results. This can be fine provided that differences are very obvious, as in Figure 1 above. We can think back to our discussion of analysis methods for RCTs: the aim is always to ask whether the variation associated with differences in intervention is greater than the variation within the intervention condition. In Figure \@ref(fig:SingleCaseDplot) there is very little overlap in the values for the intervention vs non-intervention periods, and statistics are unnecessary.  However, we can simulate a more ambiguous result, simply by increasing the variation within both time periods. Figure \@ref(fig:SingleCaseDplot2) is the same as Figure \@ref(fig:SingleCaseDplot), except that the measures are five times more variable, so the signal of the intervention is harder to see. For data such as this, we might want to support our impression of a true effect with a statistical test. The null hypothesis in this case would be that there is no difference between the four time intervals. 
+Early reports of N-of-1 studies often focused on simple visualisation of results to determine intervention effects, and this is still a common practice [@perdices2009]. This can be fine provided that differences are very obvious, as in Figure \@ref(fig:SingleCaseDplot) above. We can think back to our discussion of analysis methods for RCTs: the aim is always to ask whether the variation associated with differences in intervention is greater than the variation within the intervention condition. In Figure \@ref(fig:SingleCaseDplot) there is very little overlap in the values for the intervention vs non-intervention periods, and statistics are unnecessary.  However, we can simulate a more ambiguous result, simply by increasing the variation within both time periods. Figure \@ref(fig:SingleCaseDplot2) is the same as Figure \@ref(fig:SingleCaseDplot), except that the measures are five times more variable, so the signal of the intervention is harder to see. For data such as this, we might want to support our impression of a true effect with a statistical test. The null hypothesis in this case would be that there is no difference between the four time intervals. 
 
 Some early N-of-1 studies in neuropsychology may have drawn over-optimistic conclusions from N-of-1 studies because they had insufficient replications of outcome measures, assuming that the observed result was a valid indication of outcome without taking into account error of measurement. The more measurements we have in this type of study, the more confidence we can place in results: whereas in RCTs we need sufficient participants to get a sense of how much variation there is in outcomes, in N-of-1 studies we need sufficient observations, and should never rely just on one or two instances. 
 
