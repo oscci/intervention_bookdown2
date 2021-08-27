@@ -20,34 +20,11 @@ library(flextable)
 
 ```
 
-Let us look again at the table of possible outcomes that can arise if we use p-values to decide if a result is statistically significant or not, shown here as \@ref(table:table2by2). In this chapter, our focus will be on the top right hand corner - the False Positive. 
-
-  
-```{r table2by2, echo=FALSE, message=FALSE, warnings=FALSE,results='asis',tab.cap="Possible outcomes of Null Hypothesis Statistical Test"}
-options(kableExtra.html.bsTable = T)
-mymat<-matrix(NA,nrow=2,ncol=3)
-
-mymat[,1]<-c("Reject Null hypothesis","Do Not Reject Null Hypothesis")
-
-mymat[,2]<-c("True Positive","False Negative \n (Type II error)")
-mymat[,3]<-c("False Positive \n (Type I error)","True Negative")
-
-mymat<-as.data.frame(mymat)
-names(mymat)<-c("","Intervention effective","Intervention ineffective")
-
-knitr::kable(mymat,escape = F, align = "c", booktabs = T) %>%
-  kable_styling(c("striped", "bordered"), latex_options = "striped", full_width = F) %>%
-  column_spec(1:1, bold = T) %>%
-  column_spec(1:3,width = "9em") %>%
-  add_header_above(c(" ","Ground truth" = 2))
-```
-
-
-
 ### Type I error
 
-A **Type I error** is a **false positive**, which occurs when the null hypothesis is rejected but a true effect is not actually present. One useful mnemonic for distinguishing Type I and Type II errors is to think of the sequence of events in the fable of the boy who cried wolf. This boy lived in a remote village and he used to have fun running out to the farmers in the fields and shouting "Wolf! Wolf!" and watching them all get alarmed. The farmers were making an (understandable) Type I error, of concluding there was a wolf when in fact there was none.  One day, however, a wolf turned up. The boy ran into the village shouting "Wolf! Wolf!" but nobody took any notice of him, because they were used to his tricks. Sadly, all the sheep got eaten because the villagers had made a Type II error, assuming there was no wolf when there really was one.  
-<!-- dorothy to try and get a picture of boy who cried wolf-->
+A **Type I error** is a **false positive**, which occurs when the null hypothesis is rejected but a true effect is not actually present. One useful mnemonic for distinguishing Type I and Type II errors is to think of the sequence of events in the fable of the boy who cried wolf. This boy lived in a remote village and he used to have fun running out to the farmers in the fields and shouting "Wolf! Wolf!" and watching them all get alarmed. The farmers were making an (understandable) Type I error, of concluding there was a wolf when in fact there was none.  One day, however, a wolf turned up. The boy ran into the village shouting "Wolf! Wolf!" but nobody took any notice of him, because they were used to his tricks. Sadly, all the sheep got eaten because the villagers had made a Type II error, assuming there was no wolf when there really was one.  This figure is really the same as Table 10.1 from the previous chapter, but redrawn in terms of wolves and sheep. 
+
+![](images/wolf_sheep.png)
 
 The type I error rate is controlled by setting the significance criterion, $\alpha=0.05$, at 5%, or sometimes more conservatively 1% ($\alpha=0.01$). With $\alpha=0.05$, on average 1 in 20 statistically significant results will be false positives; when it is .01, then 1 in 100 will be false positives. The .05 cutoff is essentially arbitrary, but very widely adopted in the medical and social sciences literature, though debate continues as to whether a different convention should be adopted [@benjamin2018, @lakens2018].  
 
