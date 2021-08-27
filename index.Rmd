@@ -10,14 +10,16 @@ link-citations: yes
 description: "Introduction to methods for evaluating effectiveness of non-medical interventions"
 
 ---
-
+```{r echo=F}
+require(bookdownplus)
+```
 
 # Preface {-}
 <!---- for include_image you need bookdownplus package-->
 \vspace{0.1in}
 
 <center>
-`r include_image("images/cover_logo.png")`
+`r include_image("images/logo_title_new.png")`
 </center>
 \vspace{0.1in}
 
@@ -45,6 +47,7 @@ Intervention research is a branch of science, and you can't do good science with
 
 ## Acknowledgements {-}
 We owe a huge debt of gratitude to Yihue Xie, whose work developing the [_bookdown_ package](https://bookdown.org/) made this book possible. It is no exaggeration to say that we would not have attempted to write a book on this topic if we hadn't had _bookdown_ to make it easy. The book [ModernDive: Statistical Inference via Data Science](https://moderndive.com/) by Chester Ismay and Albert Y. Kim was also highly influential in demonstrating what could be done with _bookdown_, and we frequently visited their code to check out ideas for formatting and packaging information.  
+Our thanks also to James Pustejovsky whose recommendations were helpful in relation to single case designs. 
 
 ## Feedback and contributions {-}
 One of the good things about an online book is that it can remain a work in progress for some time, giving readers the opportunity to provide suggestions and corrections. We welcome such feedback. Readers who already use github can of course send pull requests with suggestions for changes, but we anticipate that most readers won't be familiar with this approach, and we encourage them to ??? make suggestions on a google doc?!!

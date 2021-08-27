@@ -12,7 +12,7 @@ options(scipen = 99, digits = 3)
 ```
 
 
-`r include_image("images/logo_solo small.png")`
+`r include_image("images/logo_alone_new.png")`
 
 ## How can we know if we've made a difference?
 
