@@ -1,5 +1,7 @@
 # Further potential for bias: who drops out and who volunteers? {#dropouts}
 
+`r include_image("images/logo_alone_new.png")`
+
 <p id="vignette">_Marie is evaluating a phonological awareness training package with a group of "at risk" five-year-olds. She has adopted a randomised controlled design, with an active control group who get extra help with maths. She recruits 30 children to each group and runs the intervention for six weeks. However, two weeks in to the study, three children in the phonological awareness group and one from the control group drop out, and she learns that another child from the control group has been taken by his mother for intensive private speech and language therapy which includes phonological awareness training. Marie is left unsure what to do? Should she exclude these children from her study?_</p>
 
 ## Dealing with dropouts: Intention to treat analysis
@@ -28,7 +30,7 @@ If the aim is to evaluate intervention targeted at disadvantaged groups, then it
 knitr::include_graphics("images/consort-flow-diagram.png")
 ``` 
 
-The flow diagram above can be downloaded from the [CONSORT website](http://www.consort-statement.org/consort-statement/flow-diagram).
+The flow diagram above can be downloaded from the [CONSORT  website](http://www.consort-statement.org/consort-statement/flow-diagram).
 Use of this flow chart has become standard in medical trials, because it helps clarify the issues covered in this chapter.  
 
 Find an intervention study in the published literature which does not include a flow diagram, and see how much of the information in the flow chart can be completed by reading the Methods section.

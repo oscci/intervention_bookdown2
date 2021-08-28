@@ -9,6 +9,7 @@ library(flextable)
 
 ```
 ## Single case (N-of-1) designs
+`r include_image("images/logo_alone_new.png")`
 
 <!---see https://arxiv.org/abs/1403.4309-->
 

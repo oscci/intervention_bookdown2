@@ -9,6 +9,8 @@ library(tidyverse)
 library(kableExtra)
 library(knitr)
 ```
+`r include_image("images/logo_alone_new.png")`
+
 In this chapter we consider how to select who is included in the experimental and control groups of an intervention study. This is a key element of a randomised controlled trial (RCT), which is widely regarded as a gold standard approach to the evaluation of interventions. The core idea is that once a target population has been identified for study, the experimenter allocates participants to intervention and control groups in a way that avoids any bias. This turns out to be much harder than you might imagine.
 
 There is a big literature on methods of allocation to intervention. The main principle behind modern intervention studies is that allocation should be completely random, i.e. not predictable from any characteristics of participants. There are many approaches to treatment allocation that are designed to avoid bias but which are not random. For the time being we are ignoring the question of who does the randomisation: this will be discussed below. We also defer until later the question of recruitment and what to do about people who do not wish to take part in a trial.<!---not sure if this is covered, though we do deal with dropouts--> We assume we have a population of potential participants and have to decide who will be in the intervention group and who will be in the control group. Consider the following methods of allocation and note your judgement as to whether they are (a) reasonable ways of avoiding bias and (b) random.

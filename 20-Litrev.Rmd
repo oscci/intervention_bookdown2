@@ -1,5 +1,7 @@
 # Reviewing the literature before you start {#litrev}
 
+`r include_image("images/logo_alone_new.png")`
+
 A research report typically starts with an Introduction that reviews relevant literature to provide context for the current study. It should establish what work has been done before on this topic, how much we already know, and what gaps there are in our knowledge. The primary focus of any literature review is to survey the research landscape and use this bigger picture outlook to better frame the research question of interest. The literature review may also identify methodological limitations of previous studies that can be addressed in a new study.
 
 It may seem strange to have a chapter on the literature review at the end of this book, but there is a good reason for that. It's certainly **not** the case that we think you should only consider the Introduction only after doing the study - although that's not unknown, especially if the researcher is trying to argue for an interpretation that was not considered in advance (see HARKing, Chapter \@ref(phacking)). Rather, it is because in order to write a good Introduction, you first need to understand a lot about experimental design and the biases that can affect research, in order to evaluate the literature properly.

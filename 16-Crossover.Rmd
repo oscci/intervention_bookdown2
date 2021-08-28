@@ -15,6 +15,8 @@ library(ggpubr)
 this is a more standard cross-over design
 https://eprints.whiterose.ac.uk/112815/1/Varley%20et%20al_Computerized%20therapy%20for%20AOS.pdf
 -->
+`r include_image("images/logo_alone_new.png")`
+
 
 
 ## A within-subjects approach to the RCT  
