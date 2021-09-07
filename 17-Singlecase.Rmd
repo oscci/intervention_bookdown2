@@ -9,6 +9,8 @@ library(flextable)
 library(ggplot2)
 library(forcats)
 library(hablar)
+library(bookdown)
+library(bookdownplus)
 
 ```
 ## Single case (N-of-1) designs
@@ -18,7 +20,7 @@ library(hablar)
 
 The single case design, also known as N-of-1 trial, or small N design, is a commonly used intervention design in clinical psychology, speech and language therapy, and neuropsychology, including aphasia therapy [@perdices2009]. The single case design may be regarded as an extreme version of a _within-subjects_ design, where comparisons are made between conditions within a single person. Very often, a set of single case trials is combined into a *case series* (see below). It is important to note that a single case trial is not a simple case report, but rather a study that is designed and analysed in a way that controls as far as possible for the kind of unwanted influences on results described in chapters 2-5. 
 
-Table \@ref(tab:scdlogic) shows the contrast in logic between the standard RCT and single case designs.
+Table \@ref(tab:scdlogic) compares the logic of the standard RCT and single case designs.
 
 ```{r scdlogic,echo=F,include=T,tab.cap= "How intervention vs control is allocated in different study designs"}
 Design <- c('RCT: Multiple participants','Single case: Multiple time-points','Single case: Multiple outcomes')
@@ -43,7 +45,8 @@ Whatever design is used, the key requirements are
 ### Minimising unwanted variance
 In the RCT, this is achieved by having a large enough sample of participants to distinguish variation associated with intervention from idiosyncratic differences between individuals, and by keeping other aspects of the trial, such as timing and outcomes, as constant as possible. 
 
-With single case trials, we do not have to worry about variation associated with individual participant characteristics - indeed we are interested in how different people respond to intervention -  but we do need to control as far as possible for other sources of variation. The ABA design involves contrasting an outcome during periods of intervention versus periods of no intervention. For example, @armson1998 studied the impact of an frequency-altered auditory feedback on 12 people who stuttered, in two condition, oral reading, and self-formulated speech. They contrasted a baseline period (A), a period with auditory feedback (B), and a post-intervention period (A). Figure \@ref(fig:SingleCaseDplot) shows data from two participants during the reading condition. Although the range of change differs for the two individuals, in both cases there is a precipitate drop in stuttering at the onset of the masking, which is sustained for some minutes before gradually rising back towards baseline levels. 
+With single case trials, we do not have to worry about variation associated with individual participant characteristics - indeed we are interested in how different people respond to intervention -  but we do need to control as far as possible for other sources of variation. The __ABA__ design is a popular single-case design that involves contrasting an outcome during periods of intervention versus periods of no intervention. For example, @armson1998 studied the impact of  frequency-altered auditory feedback on 12 people who stuttered. They contrasted a baseline period (A), a period with auditory feedback (B), and a post-intervention period (A), with several measures of stuttering taken during each period. Figure \@ref(fig:SingleCaseDplot) shows data from two participants during a reading condition. Although the initial amount of stuttering differs for the two individuals, in both cases there is a precipitate drop in stuttering at the 5 minute point corresponding to the onset of the masking, which is sustained for some minutes before gradually rising back towards baseline levels. The baseline period is useful for providing a set of estimates of stuttering prior to intervention, so we can see that the drop in stuttering, at least initially, is outside the range of variation that occurs spontaneously.  
+
 
 ```{r SingleCaseDplot, echo=F, message=F, warning=F, fig.width=8,fig.height=4, fig.cap="Outcome over time in a single case ABA design. Digitised data from two participants in Figure 2 of Armson et al (2008)"}
 
@@ -63,20 +66,130 @@ text(18,24.5,"A",cex=1.5)
 
 ```
 
-In another kind of single case approach, the multiple baseline across behaviours design, it is the _outcome_ measure that is varied. For this method to be applicable, we need an intervention that is targeted specifically at one of two or more possible behaviours. To demonstrate effectiveness, we need to show that it is the targeted behaviour that improves, while the comparison behaviour remains unaffected. For instance, @best2013 evaluated a cueing therapy for anomia in acquired aphasia in a case series of 16 patients, with the aim of comparing naming ability for 100 words that had been trained versus 100 untrained words. By using a large number of words, carefully selected to be of similar initial difficulty, they had sufficient data to clearly show whether or not there was selective improvement for the trained words in individual participants.  
+In another kind of single case approach, the __multiple baseline across behaviours__ design, it is the _outcome_ measure that is varied. For this method to be applicable, we need an intervention that is targeted specifically at one of two or more possible behaviours. To demonstrate effectiveness, we need to show that it is the targeted behaviour that improves, while the comparison behaviour remains unaffected. For instance, @best2013 evaluated a cueing therapy for anomia in acquired aphasia in a case series of 16 patients, with the aim of comparing naming ability for 100 words that had been trained versus 100 untrained words. By using a large number of words, carefully selected to be of similar initial difficulty, they had sufficient data to clearly show whether or not there was selective improvement for the trained words in individual participants.  
+
+Figure \@ref(fig:bestplot) is redrawn from data of @best2013. The black points show N items correct on the two sets of items prior to intervention. They were selected to be of similar difficulty and hence they cluster around the dotted line, which shows the point where scores on both item sets are equivalent.  The red points show scores after intervention. Points that fall above the dotted line correspond to cases who did better with trained than untrained words; those below the line did better with untrained than trained words. The red points tend to be placed vertically above the pre-test scores for each individual, indicating that there is improvement after intervention in the trained items (y-axis), but not on control items (x-axis).  
+
+```{r bestplot, echo=F, message=F, warning=F, fig.width=8,fig.height=4, fig.cap="Outcome over time in multiple outcomes design. Reconstructed data from 16 participants, Best et al (2013)"}
+bestdf <- read.csv("data/best_data.csv") #from Appendix 5; this is actually both types of item together I think (N=200)
+bestdf<-bestdf[1:16,] #remove row 17 - has means
+bestdfTpre <- read.csv("data/bestdat1.csv") #digitised from figure 1 in paper
+bestdfTpost <- read.csv("data/bestdat2.csv") #digitised from figure 1 in paper
+
+bestdf$tot <- rep(200,16)
+bestdf$tot[c(11,15)]<-120 #1 participants with 60 items per condition
+bestdf$tothalf<-bestdf$tot/2
+bestdf$totNpre <- round(bestdf$tot*bestdf$Pre.therapy.A2,0)
+bestdf$totNpost <- round(bestdf$tot*bestdf$Post.therapy.A3,0)
+bestdf$Tpre <-  round(bestdf$tothalf*bestdfTpre[,3]/100,0) #100 for all as this is a proportion; this formula gives N in relation to tothalf (which is total N)
+bestdf$Tpost <- round(bestdf$tothalf*bestdfTpost[,3]/100,0)
+bestdf$Cpre <-bestdf$totNpre-bestdf$Tpre #This is NUMBER, not proportion
+bestdf$Cpost <-bestdf$totNpost-bestdf$Tpost #This is NUMBER, not proportion
+
+bestdf$pT <-NA
+bestdf$pC <-NA
+for (t in 1:2){
+  mycols<-c('Cpre','Cpost')
+  mydestcol <- 'pC'
+  if(t==2){mycols <- c('Tpre','Tpost')
+  mydestcol<-'pT'}
+bdf<-t(bestdf[,mycols]) #2 cols of interest, transposed
+
+dummy<-data.frame(matrix(100,nrow=1,ncol=2))
+for (i in 1:nrow(bestdf)){
+  ptest <- prop.test(x=bdf[,i],n=rep(bestdf$tothalf[i],2),alternative = 'less')
+  bestdf[i,mydestcol] <- round(ptest$p.value,3)
+}
+}
+
+#How best to display?
+plot(bestdf$Cpre,bestdf$Tpre,ylim=c(0,100),xlim=c(0,100),xlab='N correct untrained words',ylab='N correct trained words',pch=16)
+lines(bestdf$Cpost,bestdf$Tpost,type='p',col='red',pch=16)
+for(i in 1:nrow(bestdf)){
+  segments(bestdf$Cpre[i],bestdf$Tpre[i],bestdf$Cpost[i],bestdf$Tpost[i])
+}
+abline(a=0,b=1,lty=2)
+legend(1, 95, legend=c("Pre-intervention", "Post-intervention"),pch=16,col=c('black','red') ,cex=0.8)
+
+```
+
+
+Given the large number of items in each set, it is possible to do a simple comparison of proportions to see whether the post-intervention scores are reliably higher than pre-intervention scores for each item set. For 14 of the 16 cases, there is a statistically significant increase in scores from pre-intervention to post-intervention for target items (corresponding to those with lines that extend vertically above the dotted line), whereas this is the case for only two of the cases when control items are considered (corresponding to cases which show horizontal movement from pre-intervention to post-intervention). 
+
+
 
 ### Minimising systematic bias  
 We have seen in previous chapters how the RCT has evolved to minimise numerous sources of unwanted systematic bias. We need to be alert to similar biases affecting results of single case trials. This is a particular concern for trial designs where we compare different time periods that do or do not include intervention. On the one hand, we may have the kinds of time-linked effects of maturation, practice or spontaneous recovery that lead to a general improvement over time, regardless of the intervention, and on the other hand there may be specific events that affect a person's performance, such as life events or illness, which may have a prolonged beneficial or detrimental effect on performance.  
 
-The general assumption of this method is that if we use a sufficient number of time intervals, time-linked biases will average out, but while this may be true for transient environmental effects, such as noise or other distractions, it is not the case for systematic influences that continue over time.  
+The general assumption of this method is that if we use a sufficient number of time intervals, time-linked biases will average out, but while this may be true for transient environmental effects, such as noise or other distractions, it is not the case for systematic influences that continue over time.  It is important to be aware of such limitations, and it may be worth considering combining this kind of design with other elements that control for time-related biases more completely (see below).
 
 ### The need for sufficient data 
-Some early single case studies in neuropsychology may have drawn over-optimistic conclusions because they had insufficient replications of outcome measures, assuming that the observed result was a valid indication of outcome without taking into account error of measurement. The more measurements we have in this type of study, the more confidence we can place in results: whereas in RCTs we need sufficient participants to get a sense of how much variation there is in outcomes, in single case studies we need sufficient observations, and should never rely just on one or two instances. 
-In theory, one can obtain evidence of a reliable result with quite a small number of trials. [fisher example in box] 
-In practice, however, Just as with group studies, we also have the issue of how to interpret null results. 
-<!--- not sure what to say here, and we could omit this, but I have started thinking it tends to be an overlooked issue-->
+Some early single case studies in neuropsychology may have drawn over-optimistic conclusions because they had insufficient replications of outcome measures, assuming that the observed result was a valid indication of outcome without taking into account error of measurement. For instance, if someone's score improved from 2/10 items correct prior to intervention to 5/10 correct after intervention, it can be hard to draw firm conclusions on the basis of this data alone: the change could just be part of random variability in the measure. The more measurements we have in this type of study, the more confidence we can place in results: whereas in RCTs we need sufficient participants to get a sense of how much variation there is in outcomes, in single case studies we need sufficient observations, and should never rely just a few instances.  
 
-### When is a single case trial feasible?  
+In effect, we need to use the same kind of logic that we saw in Chapter \@ref(power), where we estimated statistical power of a study by checking how likely we would be to get a statistically significant result from a given sample size.  Table \@ref(tab:Nitems-power) shows power to detect a true effect of a given size in a __multiple baseline across behaviours__ design of the kind used by @best2013, where we have a set of trained vs untrained items, each of which is scored either right or wrong. The entries in this table show power, which is the probability that a study would detect a true effect of a given size. These entries were obtained by simulating 1000 datasets with each of the different combinations of sample size and effect size.  
+
+The columns show the effect size simply as the difference in proportion items correct for trained vs untrained words. These two sets were equated for difficulty prior to intervention, and the table shows the difference in proportion correct between the two sets after intervention. So if the initial proportion correct was .3 for both trained and untrained items, but after intervention, we expect accuracy on trained items to increase to .6 and the untrained to stay at .3, then the difference between the two sets after treatment is .3, shown in the 4th column of the table.  We can then read down this column to see the point at which power reaches 80% or more. This occurs at the 4th row of the table, when there are 40 items in each set. If we anticipated a smaller increase in proportion correct for trained items of .2, then we would need 80 items per set to achieve 80% power. 
+
+
+```{r Nitems-power,echo=F,tab.cap="N items per set needed to detect target-control item difference of a given size",warning=F,message=F}
+
+
+clist <- seq(.2,.5,.1) #proportions correct in controls
+Nitem <- seq(10,200,10)
+tlist <- seq(.2,.9,.1)
+powerdf <- expand.grid(c=clist,t=tlist,Nitem=Nitem)
+powerdf$power<-NA
+w<-which(powerdf$c>powerdf$t) #we aren't interested in cases where t is lower than c
+powerdf<-powerdf[-w,]
+readthisfile <- 1
+if(readthisfile == 0){
+niter=1000
+for(n in 1:nrow(powerdf)){
+  N1 <- rbinom(niter,powerdf$Nitem[n],powerdf$t[n])
+  N2 <- rbinom(niter,powerdf$Nitem[n],powerdf$c[n])
+  N <-powerdf$Nitem[n]
+  myp<-vector()
+  for (i in 1:niter){
+    myp[i]<-prop.test(x=c(N2[i],N1[i]),n=c(N,N),alternative='less')$p.value
+  }
+  powerdf$power[n] <-length(which(myp<.05))/niter
+}
+
+w<-which(powerdf$power>.9)
+powerdf$eff<-powerdf$t-powerdf$c
+
+fpowername <- paste0('data/powerprops_nsim',niter,'.csv')
+
+
+myag <- aggregate(powerdf$power,by=list(powerdf$Nitem,powerdf$eff),FUN=mean)
+colnames(myag)<-c('NperSet','Effsize','power')
+data_wide <- spread(myag, NperSet, power)
+write.csv(data_wide,fpowername,row.names=F)
+mytab<-as.data.frame(t(round(data_wide,3)))
+mytab<-cbind(row.names(mytab),mytab)
+colnames(mytab)<-c('N_per_Set',paste0('.',100*mytab[1,2:9]))
+mytab<-mytab[-1,]
+row.names(mytab) <- NULL
+mytab<-mytab[,1:8]
+mytab[2:8]<-round(100*mytab[2:8],0)
+mytab<-mytab[,-2]
+write.csv(mytab,'data/power_singlecase_itemssets.csv',row.names=F)
+}
+if(readthisfile==1){
+  mytab <- read.csv('data/power_singlecase_itemssets.csv')
+}
+ft<-flextable(mytab)
+ft <- add_header_row(
+  x = ft, values = c(" ", "Trained - untrained (proportion correct) difference"),
+  colwidths = c(1, 6))
+ft <- theme_box(ft)
+
+ft
+
+```
+
+
+### Single case trial designs for interventions with enduring effects
 
 The single case trial is sometimes dismissed as providing poor quality evidence, but a well-designed trial can be a highly efficient way to obtain an estimate of treatment efficacy in an individual.  However, in the context of neurorehabilitation and speech-and-language therapy, there would appear to be a major drawback in its application: in the course of a historical review of this approach, @mirza2017 described the "N-of-1 niche" as follows:  
   
@@ -84,20 +197,16 @@ _"The design is most suited to assessing interventions that act and cease to act
   
 While the characteristics in the second sentence fit well with speech-and-language therapy interventions, the first requirement - that the intervention should "act and cease to act quickly" is clearly inapplicable. As described in the previous chapter, with few exceptions, interventions offered by those working in education as well as speech and language therapists and those working in other allied health professions are intended to produce long-term change that persists long after the therapy has ended. Indeed, a therapy that worked only during the period of administration would not be regarded as a success. This means that some single case designs, notably ABA designs, which compare an outcomes for periods with (B) and without (A) intervention, anticipating that scores will go up transiently during the intervention block, will be inapplicable. In this regard, behavioural interventions are quite different from many pharmaceutical interventions, where ABA designs are increasingly being used to compare a series of active and washout periods for a drug. 
 
-Despite this limitation, it is feasible to use an approach where we compare different time periods with and without intervention in some situations, most notably when there is good evidence that the targeted behaviour is unlikely to improve spontaneously. Inclusion of a baseline period, where behaviour is repeatedly sampled before intervention has begun, may give confidence that this is the case. An example of this __multiple baseline__ approach from a study by @swain2020 is discussed below. Where the same intervention can be applied to a group of participants, then a hybrid method known as the __multiple baseline across participants__ design can be used, which combines both between and within-subjects comparisons. A study by @koutsoftas is used to illustrate this approach below. 
+Despite this limitation, it is feasible to use an approach where we compare different time periods with and without intervention in some situations, most notably when there is good evidence that the targeted behaviour is unlikely to improve spontaneously. Inclusion of a baseline period, where behaviour is repeatedly sampled before intervention has begun, may give confidence that this is the case. An example of this __multiple baseline__ approach from a study by @swain2020 is discussed below. Where the same intervention can be applied to a group of participants, then a hybrid method known as the __multiple baseline across participants__ design can be used, which combines both between and within-subjects comparisons. A study by @koutsoftas2009 is used to illustrate this approach below. 
 
 One feature of many behavioural interventions (including those used in education and clinical psychology as well as in speech and language therapy) makes them excellent candidates for an alternative kind of single case trial design, the __multiple baseline across behaviours__ design. This is applicable where a single intervention has potential to target several specific behaviours or skills. This gives this field an edge that drug trials often lack: we can change the specific outcome that is targeted by the intervention and compare it with another outcome that acts as a within-person control measure. The example above of comparing trained vs untrained words in aphasia therapy provides an example of this approach [@best2013]. However, identifying alternative outcomes to compare is not always straightforward. We consider below a study by @leniston2021 that illustrates this approach.  
 
-
-### Example of an N-of-1 case series  
-The terms 'single case' and 'N-of-1' are misleading in implying that studies only involve one trained person. More commonly, studies assemble a series of N-of-1 cases. Where the same intervention is used for all cases, regular group statistics may be applied. But unlike in RCTs, heterogeneity of response is expected and documented. In fact, for that kind of study, the interest is less in whether an overall intervention effect is statistically significant, as in whether the data provide evidence of individual variation in response to intervention, as this is what would justify analysis of individual cases. Formally, it is possible to test whether treatment effects vary significantly across participants by comparing a model that does or does not contain a term representing this effect, using [linear mixed models] (https://stackoverflow.com/questions/24019807/how-to-compare-a-model-with-no-random-effects-to-a-model-with-a-random-effect-us), but we would recommend you consult a statistician, as those methods are complex and require specific types of data. In practice, it is usually possible to judge how heterogeneous responses to intervention are by inspecting plots of individual participants.  
-
-Typically the small sample sizes in N-of-1 case series preclude any strong conclusions about the characteristics of those who do and do not show intervention effects, but results may subsequently be combined across groups, and specific hypotheses formulated about the characteristics of those who show a positive response. We consider an example of this approach by @best2013 below. 
 
 ### Example of multiple baseline design: Speech and language therapy for adolescents in youth justice.
 This figure from @swain2020 provides a neat synopsis of the multiple baseline design approach. 
 
 ![Data from one case in the @swain2020 study](images/swain_eg.png)
+  
 The three panels show percentages correct on outcome probes for three skills: spelling-phonics, spelling-morphology and vocabulary. These were targeted sequentially in different sessions, and evidence for intervention effectiveness is obtained when a selective increase in performance is shown for the period during and after intervention.  The open squares give a rating of the adolescent's engagement with the intervention, and the open triangles are scores on a nonword repetition task, that was administered intermittently as a control probe, where no improvement was expected. Note that for all three tasks, there is little or no overlap for scores during baseline and those obtained  during and after intervention. The baseline data establish that although targetted behaviours vary from day to day, there is no systematic upward trend in performance until the intervention is administered. Furthermore, the fact that improvement is specific to the behaviour that is targeted in that session gives confidence that this is not just down to some general placebo effect. 
 
 In the other case studies reported by @swain2020, different behaviours were targeted, according to the specific needs of the adolescents who were studied. 
@@ -220,7 +329,12 @@ In sum, this method can handle the (typical) situation where intervention effect
 
 
 ### Example of an analysis of case series data
-@best2013 evaluated rehabilitation for anomia in acquired aphasia. The researchers contrasted naming ability for words that had been trained, using a cueing approach, versus a set of untrained control words, a multiple baseline across behaviours design. In general, results were consistent with prior work in showing that improvement was largely confined to trained words. As noted above, this result allows us to draw a clear conclusion that the intervention was responsible for the improvement, but from a therapeutic perspective it was disappointing, as one might hope to see generalisation to novel words.  
+The terms 'single case' and 'N-of-1' are misleading in implying that studies only involve one trained person. More commonly, studies assemble a series of N-of-1 cases. Where the same intervention is used for all cases, regular group statistics may be applied. But unlike in RCTs, heterogeneity of response is expected and documented. In fact, for that kind of study, the interest is less in whether an overall intervention effect is statistically significant, as in whether the data provide evidence of individual variation in response to intervention, as this is what would justify analysis of individual cases. Formally, it is possible to test whether treatment effects vary significantly across participants by comparing a model that does or does not contain a term representing this effect, using [linear mixed models] (https://stackoverflow.com/questions/24019807/how-to-compare-a-model-with-no-random-effects-to-a-model-with-a-random-effect-us), but we would recommend you consult a statistician, as those methods are complex and require specific types of data. In practice, it is usually possible to judge how heterogeneous responses to intervention are by inspecting plots of individual participants.  
+
+Typically the small sample sizes in N-of-1 case series preclude any strong conclusions about the characteristics of those who do and do not show intervention effects, but results may subsequently be combined across groups, and specific hypotheses formulated about the characteristics of those who show a positive response.
+
+
+An example comes from the study by @best2013 evaluating rehabilitation for anomia in acquired aphasia. As described above, researchers contrasted naming ability for words that had been trained, using a cueing approach, versus a set of untrained control words, a multiple baseline across behaviours design. In general, results were consistent with prior work in showing that improvement was largely confined to trained words. As noted above, this result allows us to draw a clear conclusion that the intervention was responsible for the improvement, but from a therapeutic perspective it was disappointing, as one might hope to see generalisation to novel words.  
 The authors subdivided the participants according to their language profiles, and suggested that improvement on untrained words was seen in a subset of cases with a specific profile of semantic and phonological strengths. This result, however, was not striking and would need to be replicated.
 
 
@@ -242,23 +356,6 @@ There is a very wide range of proposed methods for more formal analysis of singl
 
 
 
-
-```{r SingleCaseDplot2, echo=F, message=F, warning=F, fig.width=8,fig.height=4, fig.cap="plot showing a single case design RCT (N=2)"}
-#simulate some data based on a known structure
-
-set.seed(1981)
-true_fct = stepfun(c(100, 200, 300), c(200, 250, 200, 250))
-
-x = 1:400
-y1 = true_fct(x) + 5*rt(length(x), df=1)
-
-
-TSdata <- data.frame(Time=x,y1=y1)
-
-ggplot(data=TSdata,aes(Time, y1)) + geom_vline(xintercept = c(0,100,200,300,400),alpha=0.8,color='grey',linetype='dashed') + geom_line()+geom_point(size=0.1,alpha=0.7) + ylab('Fluency score')+theme_bw()  + annotate("text",x = c(150,350) , y =c(350,150), label = "Intervention period") 
-
-
-```
 
 ## Overview of considerations for single case designs
 
