@@ -31,6 +31,7 @@ This is potentially a major drawback for RCTs - in the real world, "pure" cases 
 In the clinical RCT setting, the potential mismatch between "ideal" and "real-world" (or "in-practice") settings has been much discussed, with concerns expressed that an overwhelming focus on measures taken to ensure _internal validity_ of trials, (i.e. factors such as randomisation and masking to avoid biases), can compromise the _external validity_ of trials - (i.e. ability to generalise results from highly selected patient groups to clinical reality) [@rothwell2005]. This has led to a distinction being drawn between Explanatory trials (testing efficacy) or Pragmatic trials (testing effectiveness). Typically in a clinical drug trial, the explanatory trial would be an earlier phase trial that tests for internal validity and the pragmatic trial would come later, using much larger samples of individuals and testing the external validity [@patsopoulos2011]. Singal and colleagues have summarised the notable differences between these trials [@singal2014]. Table \@ref(tab:diffeff), reproduced from [@singal2014], presents the key differences as summary bullet points.
  
  
+ 
 ```{r diffeff,echo=FALSE,message=FALSE,warning=FALSE,tab.cap="Efficacy vs Efficiency trials"}
 library(tidyverse)
 library(knitr)
