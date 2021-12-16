@@ -72,7 +72,7 @@ The adaptive design, as the name suggests, allows for modifications to certain a
 
 
 ```{r adaptivegif, fig.align="center", echo=FALSE,fig.caption="Commonly used adaptive designs"}
-knitr::include_graphics("images/adaptive_designs.gif")
+knitr::include_graphics("images/adaptive_designs.png")
 ``` 
 A presentation by @ludlow2013 illustrated the potential of adaptive designs in speech and language therapy. She noted that most trials of swallowing therapies used a similar schedule, regardless of the type of therapy: the patient was seen 1 hour a day for 10 days, giving a total exposure of 10 hours. Alternatively, some outpatient clinics would have patients coming in for one hour per week, for 2-4 weeks. Ludlow suggested that before embarking on a large and costly RCT it would make sense to do adaptive trials to find out what was the optimal schedule - would longer sessions be more effective, or would it be better to have more frequent, shorter sessions? Were there benefits from combining intervention approaches? 
 

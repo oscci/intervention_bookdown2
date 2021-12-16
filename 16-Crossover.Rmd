@@ -115,27 +115,17 @@ It is possible to have a wait-list design that avoids nocebo effects if a plausi
 
 ```{r calderfig, echo=F,fig.leg = "Mean % correct in delayed cross-over study by Calder et al, 2021 (data plotted from Table 2)."}
 
-cdat <- read.csv("data/calder_xover.csv")
-wantrows <- c(1,5,7,9,13,15)
-cdat <-cdat[wantrows,]
-#reorder cols to facilitate conversion
-cdatwide <- cdat[,c(1,2,3,5,7,9,11,13,15,4,6,8,10,12,14,16)]
-clong <- gather(cdatwide, phase, measurement, T1:T7, factor_key=TRUE)
-clong$OutcomesGroup <-paste0(clong$Group,clong$Outcomes)
-clong$OutcomesGroup<-as.factor(clong$OutcomesGroup)
+clong<-read.csv('data/Calder_long.csv') #means computed from raw data provided by Samuel Calder
+clong$Group <- as.factor(clong$Group)
 clong$Outcomes <- as.factor(clong$Outcomes)
 clong$phase <- as.factor(clong$phase)
-levels(clong$phase)=1:7
-clong$Group <- as.factor(clong$Group)
-
-  
- #Try with base R!
+ #Try plot with base R!
 plot(1, type = "n",                         # Remove all elements of plot
      xlab = "Phase", ylab = "% Correct",
      xlim = c(1, 7), ylim = c(0, 80))
 mycols <- c('blue','red')
 mylines <- c(1,2,3)
-mypch<-c(2,0,19)
+mypch<-c(19,0,2)
 vpos<-c(75,10)
 hpos <-c(4.5,6.5)
  for (g in 1:2){
